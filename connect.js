@@ -4,7 +4,7 @@ const connect = new Pool({
     host:'localhost',
     user:'postgres',
     password:'arya99',
-    database:'test_node',
+    database:'e_commerce',
     port:5432
 })
 

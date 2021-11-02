@@ -50,20 +50,25 @@ app.get('/signup', (req,res) => {
 
 /* Signup functionality */
 app.post('/signup', (req,res) => {
-    let body = req.body  // gives user name and password given in form
-    let sql = `SELECT * FROM users WHERE password= '${body.password}' AND name = '${body.name}'`
+    let body = req.body  
+    let sql = `SELECT * FROM customer WHERE password= '${body.password}' AND email_id = '${body.email_id}'`
     // This query searches amongst users for this name and password
 
     try {
         connectdb.query(sql, (err,result) => {
-            console.log(body)
+            if (err) throw err
 
             // Below lines checks if above query was empty or not
             if (JSON.stringify(result.rows) === '[]') {
-                const id = uniqid()
+                const customer_id = uniqid()
+                const cart_id = uniqid()
 
-                // If no user was found this query creates a new user and inserts it in user table
-                let sql = `INSERT INTO users(id,name,password) VALUES('${id}','${body.name}','${body.password}')`
+                // If no user was found this query creates a new user and inserts it in customer table
+                let sql = `
+                INSERT INTO customer(customer_id,name,phone_no,address,cart_id,password,email_id) 
+                VALUES
+                ('${customer_id}','${body.name}','${body.phone_no}','${body.address}','${cart_id}','${body.password}','${body.email_id}')
+                `
                 connectdb.query(sql, (err,result) => {
                     if (err) throw err;
                     console.log('user saved in db')

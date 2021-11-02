@@ -1,5 +1,7 @@
 /* Basic modules requiring */
 
+/* Views folder is only for additional testing and should be removed later */
+
 const express = require('express')
 const app = express()
 const path = require('path')
@@ -30,6 +32,8 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 
+
+
 /* Home page */
 app.get('/', (req,res) => {
     res.render('home')
@@ -42,18 +46,26 @@ app.get('/login', (req,res) => {
 })
 
 
+/* Login functionality */
 app.post('/login', (req,res) => {
-    const body = req.body
-    console.log(body)
+    const body = req.body // gives user mail and password been used for login
+    //console.log(body)
+
+    /* This query checks whether a user with same email and password exists */
     let sql = `SELECT * FROM customer WHERE password= '${body.password}' AND email_id = '${body.email_id}'`
     try {
         connectdb.query(sql, (err,result) => {
-            if (err) console.log('error')
+            if (err) console.log(err)
 
+
+            /* This clause checks whether the result of the above query gives any rows or not */
+            /* If the result is empty that means no user by above creds exists */
             if (JSON.stringify(result.rows) === '[]') {
                 res.send('User does not exists please signup')
                 console.log('User does not exists')
             }
+
+            /* The result was not empty and we obtain a user with specified email and password */
             else {
                 res.send('Logged in succesfully')
                 console.log(result.rows)
@@ -79,18 +91,18 @@ app.get('/signup', (req,res) => {
 app.post('/signup', (req,res) => {
     let body = req.body  
     let sql = `SELECT * FROM customer WHERE password= '${body.password}' AND email_id = '${body.email_id}'`
-    // This query searches amongst users for this name and password
+    /* This query searches amongst users for this email id and password */
 
     try {
         connectdb.query(sql, (err,result) => {
             if (err) throw err
 
-            // Below lines checks if above query was empty or not
+            /* Below lines checks if above query was empty or not */
             if (JSON.stringify(result.rows) === '[]') {
                 const customer_id = uniqid()
                 const cart_id = uniqid()
 
-                // If no user was found this query creates a new user and inserts it in customer table
+                /* If no user was found this query creates a new user and inserts it in customer table */
                 let sql = `
                 INSERT INTO customer(customer_id,name,phone_no,address,cart_id,password,email_id) 
                 VALUES

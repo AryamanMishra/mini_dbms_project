@@ -8,4 +8,7 @@ create table customer (
     email_id varchar 
 )
 select * from customer
-drop table customer
+
+
+-- This file is just for writing and storing queries and making new tables in the database 
+-- This file is not running anywhere

@@ -42,6 +42,33 @@ app.get('/login', (req,res) => {
 })
 
 
+app.post('/login', (req,res) => {
+    const body = req.body
+    console.log(body)
+    let sql = `SELECT * FROM customer WHERE password= '${body.password}' AND email_id = '${body.email_id}'`
+    try {
+        connectdb.query(sql, (err,result) => {
+            if (err) console.log('error')
+
+            if (JSON.stringify(result.rows) === '[]') {
+                res.send('User does not exists please signup')
+                console.log('User does not exists')
+            }
+            else {
+                res.send('Logged in succesfully')
+                console.log(result.rows)
+            }
+        })    
+    } 
+    catch (err) {
+        console.log('error')
+    }
+})
+
+
+
+
+
 /* Getting singup page */
 app.get('/signup', (req,res) => {
     res.render('signup')

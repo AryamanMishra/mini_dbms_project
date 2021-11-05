@@ -67,7 +67,7 @@ app.post('/login', (req,res) => {
 
             /* The result was not empty and we obtain a user with specified email and password */
             else {
-                res.send('Logged in succesfully')
+                res.redirect(`/users/${id}`)
                 console.log(result.rows)
             }
         })    
@@ -101,17 +101,28 @@ app.post('/signup', (req,res) => {
             if (JSON.stringify(result.rows) === '[]') {
                 const customer_id = uniqid()
                 const cart_id = uniqid()
+                // console.log(body)
 
                 /* If no user was found this query creates a new user and inserts it in customer table */
-                let sql = `
-                INSERT INTO customer(customer_id,name,phone_no,address,cart_id,password,email_id) 
-                VALUES
-                ('${customer_id}','${body.name}','${body.phone_no}','${body.address}','${cart_id}','${body.password}','${body.email_id}')
+                let cart_sql = 
+                `
+                    INSERT INTO CART(cart_id,total_cost)
+                    VALUES
+                    ('${cart_id}',0.0)
+                `
+                connectdb.query(cart_sql, (err,result) => {
+                    if (err) throw err
+                })
+                let sql = 
+                `
+                    INSERT INTO customer(customer_id,name,phone_no,address,cart_id,password,email_id) 
+                    VALUES
+                    ('${customer_id}','${body.name}','${body.phone_no}','${body.address}','${cart_id}','${body.password}','${body.email_id}')
                 `
                 connectdb.query(sql, (err,result) => {
                     if (err) throw err;
                     console.log('user saved in db')
-                    // res.redirect(`/users/${id}`)  // redirections to be handled in frontend
+                    res.redirect(`/users/${customer_id}`)  // redirections to be handled in frontend
                 })
             }
             else {
@@ -129,6 +140,39 @@ app.post('/signup', (req,res) => {
 })
 
 
+
+app.get('/users/:id', (req,res) => {
+    const customer_id = req.params.id
+    let customer_name = ''
+    let sql =
+    `
+        SELECT name from customer where customer_id = '${customer_id}'
+    `
+    connectdb.query(sql, (err,result) => {
+        if (err) throw err
+        customer_name = result.rows[0].name
+        res.render('user/home', {customer_id,customer_name})
+    })
+})
+
+
+
+app.get('/users/:id/cart', (req,res) => {
+    const customer_id = req.params.id
+    let sql =
+    `
+        select
+            a.total_cost
+            from cart as a
+            inner join customer as b
+            on a.cart_id = b.cart_id
+            where b.customer_id = '${customer_id}'
+    `
+    connectdb.query(sql, (err,result) => {
+        if (err) throw err
+        res.status(200).send(result.rows[0]["total_cost"].toString())
+    })
+})
 
 // Listening requests
 const port = process.env.port || 8888

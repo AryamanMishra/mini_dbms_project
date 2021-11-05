@@ -117,5 +117,4 @@ create table reviews(
     foreign key(customer_id) references customer(customer_id),
     foreign key(product_id) references product(product_id)
 )
-
-
+select * from reviews

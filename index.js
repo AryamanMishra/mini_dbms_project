@@ -194,10 +194,10 @@ app.get('/users/:id/cart', (req,res) => {
 
 
 
-app.get('/products', (req,res) => {
+app.get('/category', (req,res) => {
     let sql = 
     `
-        select * from product
+        select * from category
     `
     connectdb.query(sql, (err,result) => {
         if (err) throw err
@@ -206,6 +206,19 @@ app.get('/products', (req,res) => {
     })
 })
 
+
+
+app.get('/seller', (req,res) => {
+    let sql =
+    `
+        select * from seller
+    `
+    connectdb.query(sql, (err,result) => {
+        if (err) throw err
+        res.send(result.rows)
+        console.log(result.rows)
+    })
+})
 
 
 // Listening requests

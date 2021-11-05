@@ -1,3 +1,4 @@
+Customer:
 {
      "name": "Aryaman Mishra",
      "phone_no":"56595695",
@@ -6,10 +7,19 @@
      "email_id":"aryamantechie@gmail.com"
 }
 
+Product:
 {
     "name" : "Samsung Galaxy M30S",
     "brand" : "Samsung",
     "price" : "14000",
     "discount": "1400",
     "availability": "Yes"
+}
+
+Seller :
+{
+    "seller_id"
+    "dealer_name" : "Samsung",
+    "phone_no" : "959595",
+    "email_id" : "samsung@support.com",
 }

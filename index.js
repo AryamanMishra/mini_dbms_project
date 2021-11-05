@@ -170,7 +170,39 @@ app.get('/users/:id/cart', (req,res) => {
     `
     connectdb.query(sql, (err,result) => {
         if (err) throw err
-        res.status(200).send(result.rows[0]["total_cost"].toString())
+        let total_cost = 0
+        if (result.rows.length !== 0)
+            total_cost = result.rows[0].total_cost
+            let cart_item_sql = 
+        `
+            select 
+            a.product_id,
+            a.quantity
+            from cart_item as a
+            inner join cart as b
+            on a.cart_id = b.cart_id
+        `
+        connectdb.query(cart_item_sql, (err,result) => {
+            let cart_items = null
+            if (result.rows.length !== 0)
+                cart_items = result.rows
+            res.render('user/cart', {total_cost,cart_items})
+            // res.status(200).send(result.rows[0]["total_cost"].toString())
+        })
+    })
+})
+
+
+
+app.get('/products', (req,res) => {
+    let sql = 
+    `
+        select * from product
+    `
+    connectdb.query(sql, (err,result) => {
+        if (err) throw err
+        res.send(result.rows)
+        console.log(result.rows)
     })
 })
 

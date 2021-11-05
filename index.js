@@ -206,6 +206,8 @@ app.get('/products', (req,res) => {
     })
 })
 
+
+
 // Listening requests
 const port = process.env.port || 8888
 app.listen(port, () => {

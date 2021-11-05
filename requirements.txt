@@ -1,0 +1,1 @@
+get product name from product id in user cart in GET method of /users/:id/cart

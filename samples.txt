@@ -1,0 +1,15 @@
+{
+     "name": "Aryaman Mishra",
+     "phone_no":"56595695",
+     "address": "Indore",
+     "password":"password123",
+     "email_id":"aryamantechie@gmail.com"
+}
+
+{
+    "name" : "Samsung Galaxy M30S",
+    "brand" : "Samsung",
+    "price" : "14000",
+    "discount": "1400",
+    "availability": "Yes"
+}

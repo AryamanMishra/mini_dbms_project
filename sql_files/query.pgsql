@@ -118,3 +118,4 @@ create table reviews(
     foreign key(product_id) references product(product_id)
 )
 select * from reviews
+

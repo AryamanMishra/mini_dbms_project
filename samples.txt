@@ -23,3 +23,7 @@ Seller :
     "phone_no" : "959595",
     "email_id" : "samsung@support.com",
 }
+Category :
+{
+    
+}

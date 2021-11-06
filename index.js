@@ -7,6 +7,7 @@ const app = express()
 const path = require('path')
 const connectdb = require('./connect') // connect file connects to pgsql
 const uniqid = require('uniqid')
+const { v4: uuidv4 } = require('uuid');
 
 
 // inbuilt connect function 
@@ -194,17 +195,20 @@ app.get('/users/:id/cart', (req,res) => {
 
 
 
-app.get('/category', (req,res) => {
+app.get('/categories', (req,res) => {
     let sql = 
     `
         select * from category
     `
     connectdb.query(sql, (err,result) => {
         if (err) throw err
-        res.send(result.rows)
-        console.log(result.rows)
+        const categories = result.rows
+        res.render('categories', {categories})
+        // console.log(result.rows)
     })
 })
+
+
 
 
 
@@ -226,3 +230,5 @@ const port = process.env.port || 8888
 app.listen(port, () => {
     console.log(`Listening on port ${port}`)
 })
+
+

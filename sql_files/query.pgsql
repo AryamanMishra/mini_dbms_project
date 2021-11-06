@@ -69,6 +69,7 @@ select * from product
 
 
 
+
 create table category(
     category_id varchar primary key,
 	category_name varchar not null

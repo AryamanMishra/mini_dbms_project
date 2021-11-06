@@ -208,7 +208,26 @@ app.get('/categories', (req,res) => {
     })
 })
 
-
+app.get('/categories/:name', (req,res) => {
+    const category_name =  req.params.name
+    let category_id_sql = 
+    `
+        select category_id from category
+        where category_name = '${category_name}'
+    `
+    connectdb.query(category_id_sql, (err,result) => {
+        const category_id = result.rows[0].category_id
+        let cat_prod = 
+        `
+            select product_name,brand,price,discount,availability
+            from product where category_id = '${category_id}'
+        `
+        connectdb.query(cat_prod, (err,result) => {
+            if (err) throw err
+            res.send(result.rows)
+        })
+    })
+})
 
 
 

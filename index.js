@@ -50,14 +50,12 @@ app.get('/login', (req,res) => {
 /* Login functionality */
 app.post('/login', (req,res) => {
     const body = req.body // gives user mail and password been used for login
-    //console.log(body)
 
     /* This query checks whether a user with same email and password exists */
     let sql = `SELECT * FROM customer WHERE password= '${body.password}' AND email_id = '${body.email_id}'`
     try {
         connectdb.query(sql, (err,result) => {
             if (err) console.log(err)
-
 
             /* This clause checks whether the result of the above query gives any rows or not */
             /* If the result is empty that means no user by above creds exists */
@@ -68,8 +66,8 @@ app.post('/login', (req,res) => {
 
             /* The result was not empty and we obtain a user with specified email and password */
             else {
-                res.redirect(`/users/${id}`)
-                console.log(result.rows)
+                const customer_id = result.rows[0].customer_id
+                res.redirect(`/users/${customer_id}`)
             }
         })    
     } 
@@ -91,7 +89,7 @@ app.get('/signup', (req,res) => {
 /* Signup functionality */
 app.post('/signup', (req,res) => {
     let body = req.body  
-    let sql = `SELECT * FROM customer WHERE password= '${body.password}' AND email_id = '${body.email_id}'`
+    let sql = `SELECT * FROM customer WHERE email_id = '${body.email_id}'`
     /* This query searches amongst users for this email id and password */
 
     try {

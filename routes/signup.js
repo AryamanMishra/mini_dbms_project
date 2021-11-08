@@ -5,10 +5,13 @@ const router = express.Router();
 const connectdb = require('../db_files/connect') // connect file connects to pgsql
 const uniqid = require('uniqid')
 const { v4: uuidv4 } = require('uuid');
+const auth = require('../middleware/auth');
+const passport = require('passport');
+
 
 
 /* Getting singup page */
-router.get('/signup', (req,res) => {
+router.get('/signup',(req,res,next) => {
     res.render('signup')
 })
 

@@ -8,6 +8,10 @@ const path = require('path')
 const connectdb = require('./db_files/connect') // connect file connects to pgsql
 const uniqid = require('uniqid')
 const { v4: uuidv4 } = require('uuid');
+const session = require("express-session");
+const auth = require('./middleware/auth')
+
+
 
 
 // inbuilt connect function 
@@ -15,6 +19,7 @@ connectdb.connect((err) => {
     if (err) throw err
     console.log('pgsql connection confirmed')
 })
+
 
 
 /* Setting views repo for ejs */
@@ -33,6 +38,10 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 
+app.use(session({secret: "secret"}));
+
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
 

@@ -1,1 +1,3 @@
 get product name from product id in user cart in GET method of /users/:id/cart
+complete order functionality by getting user details from req.user
+complete middleware

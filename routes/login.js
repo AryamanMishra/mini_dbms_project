@@ -1,20 +1,23 @@
 const {Router} = require('express')
 const express = require("express");
+const passport = require('passport');
 const router = express.Router();
 // const bcryptjs = require("bcryptjs");
 const connectdb = require('../db_files/connect') // connect file connects to pgsql
+const auth = require('../middleware/auth')
+
 
 
 
 /* Getting login page */
-router.get('/login', (req,res) => {
+router.get('/login',(req,res,next) => {
     res.render('login')
 })
 
 
 
 /* Login functionality */
-router.post('/login', (req,res) => {
+router.post('/login',(req,res) => {
     const body = req.body // gives user mail and password been used for login
 
     /* This query checks whether a user with same email and password exists */

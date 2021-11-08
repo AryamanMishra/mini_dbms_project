@@ -35,6 +35,9 @@ app.use(express.urlencoded({extended:true}))
 
 
 
+
+
+
 /* Home page */
 app.get('/', (req,res) => {
     res.render('home')
@@ -47,15 +50,17 @@ app.get('/login', (req,res) => {
 })
 
 
+
 /* Login functionality */
 app.post('/login', (req,res) => {
     const body = req.body // gives user mail and password been used for login
 
     /* This query checks whether a user with same email and password exists */
-    let sql = `SELECT * FROM customer WHERE password= '${body.password}' AND email_id = '${body.email_id}'`
+    let sql = `SELECT * FROM customer WHERE email_id = '${body.email_id}'`
     try {
         connectdb.query(sql, (err,result) => {
             if (err) console.log(err)
+
 
             /* This clause checks whether the result of the above query gives any rows or not */
             /* If the result is empty that means no user by above creds exists */
@@ -66,7 +71,9 @@ app.post('/login', (req,res) => {
 
             /* The result was not empty and we obtain a user with specified email and password */
             else {
-                const customer_id = result.rows[0].customer_id
+                customer_id = result.rows[0].customer_id
+                console.log(customer_id);
+                cart_id = result.rows[0].cart_id
                 res.redirect(`/users/${customer_id}`)
             }
         })    
@@ -86,6 +93,7 @@ app.get('/signup', (req,res) => {
 })
 
 
+
 /* Signup functionality */
 app.post('/signup', (req,res) => {
     let body = req.body  
@@ -98,8 +106,8 @@ app.post('/signup', (req,res) => {
 
             /* Below lines checks if above query was empty or not */
             if (JSON.stringify(result.rows) === '[]') {
-                const customer_id = uniqid()
-                const cart_id = uniqid()
+                customer_id = uniqid()
+                cart_id = uniqid()
                 // console.log(body)
 
                 /* If no user was found this query creates a new user and inserts it in customer table */
@@ -141,7 +149,7 @@ app.post('/signup', (req,res) => {
 
 
 app.get('/users/:id', (req,res) => {
-    const customer_id = req.params.id
+    customer_id = req.params.id
     let customer_name = ''
     let sql =
     `
@@ -157,7 +165,7 @@ app.get('/users/:id', (req,res) => {
 
 
 app.get('/users/:id/cart', (req,res) => {
-    const customer_id = req.params.id
+    customer_id = req.params.id
     let sql =
     `
         select
@@ -222,10 +230,62 @@ app.get('/categories/:name', (req,res) => {
         `
         connectdb.query(cat_prod, (err,result) => {
             if (err) throw err
-            res.send(result.rows)
+            const products = result.rows
+            res.render('products',{products,category_name, customer_id})
         })
     })
 })
+
+
+
+app.post('/categories/:category_name/product', (req,res) => {
+    const id = req.body.customer_id
+    const order_id = uuidv4()
+    let date = new Date();
+    const dd = String(date.getDate()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+    const yyyy = date.getFullYear();
+    date = mm + '/' + dd + '/' + yyyy;
+    const product_id = uuidv4()
+    const total_price = req.body.price
+    const total_discount = req.body.discount
+    const transaction_id = uuidv4()
+    let order_sql = 
+    `
+        insert into order_details
+        values
+        ('${order_id}','${date}','${id}','${product_id}','${total_price}','${total_discount}','${transaction_id}','${cart_id}') 
+    `
+    connectdb.query(order_sql, (err,result) => {
+        if (err) throw err
+        let total_amount = total_price - total_discount
+        let transaction_sql = 
+        `
+            insert into transaction
+            values('${transaction_id}','${date}','${total_amount}','${id}','${cart_id}')
+        `
+        connectdb.query(transaction_sql, (err,result) => {
+            if (err) throw err
+            res.redirect(`/users/${id}/orders`)
+        })
+    })
+})
+
+
+
+app.get('/users/:customer_id/orders', (req,res) => {
+    const id = req.params.customer_id
+    let sql = 
+    `
+        select * from order where customer_id = ${id}
+    `
+    connectdb.query(sql, (err,result) => {
+        if (err) throw err
+        const orders = result.rows
+        res.render('user/orders', {orders,id})
+    })
+})
+
 
 
 
@@ -240,6 +300,9 @@ app.get('/seller', (req,res) => {
         console.log(result.rows)
     })
 })
+
+
+
 
 
 // Listening requests

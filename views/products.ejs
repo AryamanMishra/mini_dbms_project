@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <% if(category_name[category_name.length - 1] === 's' ) { %> 
+            <%= category_name.substring(0,category_name.length - 1) %> Products 
+        <% } else { %>
+            <%= category_name %> Products 
+        <% } %> 
+    </title>
+</head>
+<body>
+    <ol>
+        <% for (let p of products) {%>
+            <form action="/categories/<%= category_name %>/product" method="post">
+                <input type="text" hidden value="<%= customer_id %>" name="customer_id">
+                <li>Name: <input type="text" hidden name="product_name" value="<%=p.product_name %>"><%=p.product_name %>
+                <br>
+                Company: <input type="text" hidden name="brand" value="<%= p.brand %>"><%= p.brand %>
+                <br>
+                Price: &#8377;<input type="text" hidden name="price" value="<%= p.price %>"><%= p.price %>
+                <br>
+                Discount: &#8377;<input type="text" hidden name="discount" value="<%= p.discount %>"><%= p.discount %>
+                <br>
+                Is It available: 
+                    <% if (p.availability === true) { %>
+                        Yes 
+                    <% } else { %>
+                        No   
+                    <% } %> 
+                <br>
+                </li>   
+                <br>
+                <button type="submit">Order</button>
+            </form>
+            <br>
+        <% } %>  
+    </ol>
+</body>
+</html>

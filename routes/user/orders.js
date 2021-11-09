@@ -55,7 +55,7 @@ router.get('/users/:customer_id/orders', (req,res) => {
 })
 
 
-router.post('/categories/:category_name/product', (req,res) => {
+router.post('/order', (req,res) => {
     const customer_id = req.cookies.customer_id
     const cart_id = req.cookies.cart_id
     // console.log(customer_id)
@@ -82,10 +82,11 @@ router.post('/categories/:category_name/product', (req,res) => {
     `
         insert into order_details
         values
-        ('${order_id}','${date}','${customer_id}','${product_id}','${total_price}','${total_discount}','${transaction_id}','${cart_id}') 
+        ('${order_id}','${date}','${customer_id}','${product_id}',${total_price},${total_discount},'${transaction_id}','${cart_id}') 
     `   
         connectdb.query(order_sql, (err,result) => {
-            if (err) console.log('e')
+            if (err) console.log(err)
+            console.log('Order placed')
             res.redirect(`/users/${customer_id}/orders`)
         })
     })

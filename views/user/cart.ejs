@@ -10,9 +10,26 @@
     <h1>Total Cost of Cart: <%= total_cost %></h1>
     <h1>Cart Items: </h1>
     <ol>
-        <% for (cart_item of cart_items) {%> 
-            <form action="/categories/<%= customer_id%>/product" method="post">
-                <li><%= JSON.stringify(cart_item) %></li>
+        <% for (p of product_details) {%> 
+            <form action="/order" method="post">
+                <input type="text" hidden name="product_id" value="<%= p.product_id %>">
+                <li>Name: <input type="text" hidden name="product_name" value="<%=p.product_name %>"><%=p.product_name %>
+                <br>
+                Company: <input type="text" hidden name="brand" value="<%= p.brand %>"><%= p.brand %>
+                <br>
+                Price: &#8377;<input type="text" hidden name="price" value="<%= p.price %>"><%= p.price %>
+                <br>
+                Discount: &#8377;<input type="text" hidden name="discount" value="<%= p.discount %>"><%= p.discount %>
+                <br>
+                Is It available: 
+                    <% if (p.availability === true) { %>
+                        Yes 
+                    <% } else { %>
+                        No   
+                    <% } %> 
+                <br>
+                </li>   
+                <br>
                 <button type="submit">Order</button>
             </form>
         <% } %> 

@@ -28,8 +28,7 @@ router.get('/users/:id/cart', (req,res) => {
             let cart_item_sql = 
         `
             select 
-            a.product_id,
-            a.quantity
+            a.product_id
             from cart_item as a
             inner join cart as b
             on a.cart_id = b.cart_id
@@ -38,7 +37,22 @@ router.get('/users/:id/cart', (req,res) => {
             let cart_items = null
             if (result.rows.length !== 0) {
                 cart_items = result.rows
-                res.render('user/cart', {total_cost,cart_items, customer_id})
+                let sql = 
+                `
+                select * from product where product_id in 
+                    (select 
+                    a.product_id
+                    from cart_item as a
+                    inner join cart as b
+                    on a.cart_id = b.cart_id)
+                `
+                connectdb.query(sql, (err,result) => {
+                    if (err) throw err
+                    let product_details = result.rows
+                    // console.log(product_details)
+                    res.render('user/cart', {total_cost,cart_items, customer_id, product_details})
+                })
+               
             }
             else 
                 res.send('No items yet')
@@ -49,7 +63,7 @@ router.get('/users/:id/cart', (req,res) => {
 })
 
 
-router.post('/categories/:category_id/cart', (req,res) => {
+router.post('/cart', (req,res) => {
     const customer_id = req.cookies.customer_id
     const cart_id = req.cookies.cart_id
     const product_id = req.body.product_id

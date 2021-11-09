@@ -10,7 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 
 
 router.get('/users/:id/cart', (req,res) => {
-    customer_id = req.params.id
+    const customer_id = req.cookies.customer_id
     let sql =
     `
         select

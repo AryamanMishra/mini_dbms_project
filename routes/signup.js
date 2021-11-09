@@ -1,4 +1,4 @@
-const {Router} = require('express')
+const {Router, application} = require('express')
 const express = require("express");
 const router = express.Router();
 // const bcryptjs = require("bcryptjs");
@@ -7,8 +7,9 @@ const uniqid = require('uniqid')
 const { v4: uuidv4 } = require('uuid');
 const auth = require('../middleware/auth');
 const passport = require('passport');
+const cookieParser = require('cookie-parser')
 
-
+router.use(cookieParser())
 
 /* Getting singup page */
 router.get('/signup',(req,res,next) => {
@@ -29,10 +30,11 @@ router.post('/signup', (req,res) => {
 
             /* Below lines checks if above query was empty or not */
             if (JSON.stringify(result.rows) === '[]') {
-                customer_id = uniqid()
-                cart_id = uniqid()
+                const customer_id = uniqid()
+                const cart_id = uniqid()
                 // console.log(body)
-
+                res.cookie('customer_id', customer_id)
+                res.cookie('cart_id', cart_id)
                 /* If no user was found this query creates a new user and inserts it in customer table */
                 let cart_sql = 
                 `

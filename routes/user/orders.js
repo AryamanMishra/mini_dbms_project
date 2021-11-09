@@ -10,15 +10,15 @@ const { v4: uuidv4 } = require('uuid');
 
 
 router.get('/users/:customer_id/orders', (req,res) => {
-    const id = req.params.customer_id
+    const customer_id = req.cookies.customer_id
     let sql = 
     `
-        select * from order where customer_id = ${id}
+        select * from order_details where customer_id = '${customer_id}'
     `
     connectdb.query(sql, (err,result) => {
         if (err) throw err
         const orders = result.rows
-        res.render('user/orders', {orders,id})
+        res.render('user/orders', {orders,customer_id})
     })
 })
 

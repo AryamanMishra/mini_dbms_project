@@ -10,6 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 
 
 router.get('/categories/:name', (req,res) => {
+    const customer_id = req.cookies.customer_id
     const category_name =  req.params.name
     let category_id_sql = 
     `
@@ -20,7 +21,7 @@ router.get('/categories/:name', (req,res) => {
         const category_id = result.rows[0].category_id
         let cat_prod = 
         `
-            select product_name,brand,price,discount,availability
+            select product_id,product_name,brand,price,discount,availability
             from product where category_id = '${category_id}'
         `
         connectdb.query(cat_prod, (err,result) => {

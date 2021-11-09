@@ -5,9 +5,9 @@ const router = express.Router();
 // const bcryptjs = require("bcryptjs");
 const connectdb = require('../db_files/connect') // connect file connects to pgsql
 const auth = require('../middleware/auth')
+const cookieParser = require('cookie-parser')
 
-
-
+router.use(cookieParser())
 
 /* Getting login page */
 router.get('/login',(req,res,next) => {
@@ -36,9 +36,11 @@ router.post('/login',(req,res) => {
 
             /* The result was not empty and we obtain a user with specified email and password */
             else {
-                customer_id = result.rows[0].customer_id
-                console.log(customer_id);
-                cart_id = result.rows[0].cart_id
+                const customer_id = result.rows[0].customer_id
+                // console.log(customer_id);
+                const cart_id = result.rows[0].cart_id
+                res.cookie('customer_id', customer_id)
+                res.cookie('cart_id', cart_id)
                 res.redirect(`/users/${customer_id}`)
             }
         })    

@@ -24,6 +24,7 @@ create table cart(
 	total_cost float
 )
 select * from cart
+delete from cart
 
 
 create table transaction(
@@ -38,7 +39,7 @@ create table transaction(
     references cart(cart_id)
 )
 select * from transaction
-
+delete from transaction
 
 
 create table cart_item (
@@ -93,6 +94,7 @@ create table order_details (
     foreign key(cart_id) references cart(cart_id) 
 )
 select * from order_details
+
 
 
 

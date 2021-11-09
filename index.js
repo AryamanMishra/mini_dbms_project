@@ -58,6 +58,7 @@ const userHome = require('./routes/user/home')
 const userCart = require('./routes/user/cart')
 const categories = require('./routes/categories')
 const userOrders = require('./routes/user/orders')
+const userTransactions = require('./routes/user/transactions')
 const seller = require('./routes/seller')
 const products = require('./routes/products')
 
@@ -74,6 +75,8 @@ app.use('/', userCart)
 app.use('/', categories)
 
 app.use('/', userOrders)
+
+app.use('/', userTransactions)
 
 app.use('/', seller)
 

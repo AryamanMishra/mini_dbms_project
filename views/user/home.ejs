@@ -8,8 +8,13 @@
 </head>
 <body>
     <h1><%= customer_id %></h1>
-    <button><a href="/categories">View Categories</a></button>
+    <button><a href="/categories" style="text-decoration: none;">View Categories</a></button>
     <br>
-    <button><a href="/users/<%= customer_id %>/cart">View Your Cart</a></button>
+    <button><a href="/users/<%= customer_id %>/cart" style="text-decoration: none;">View Your Cart</a></button>
+    <br>
+    <button><a href="/users/<%= customer_id %>/orders" style="text-decoration: none;">View Your Order History</a></button>
+    <br>
+    <button><a href="/users/<%= customer_id %>/transactions" style="text-decoration: none;">View Your Transactions History</a></button>
+    <br>
 </body>
 </html>

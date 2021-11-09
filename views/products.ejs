@@ -15,7 +15,7 @@
 <body>
     <ol>
         <% for (let p of products) {%>
-            <form action="/categories/<%= category_name %>/product" method="post">
+            <form action="/categories/<%= category_name %>/cart" method="post">
                 <input type="text" hidden name="product_id" value="<%= p.product_id %>">
                 <li>Name: <input type="text" hidden name="product_name" value="<%=p.product_name %>"><%=p.product_name %>
                 <br>

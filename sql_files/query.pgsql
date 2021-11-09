@@ -52,7 +52,7 @@ create table cart_item (
     references cart(cart_id)
 )
 select * from cart_item
-
+delete from cart_item
 
 
 create table product(

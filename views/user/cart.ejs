@@ -4,10 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title> Your Cart </title>
 </head>
 <body>
     <h1>Total Cost of Cart: <%= total_cost %></h1>
-    <h1>Cart Items: <%= cart_items %> </h1>
+    <h1>Cart Items: </h1>
+    <ol>
+        <% for (cart_item of cart_items) { %>
+            <form action="/categories/:category_name/product" method="post">
+                <li><%= JSON.stringify(cart_item) %></li>
+                <button>Order</button>
+            </form>
+        <% } %>  
+    </ol>
+    <button><a href="/users/<%= customer_id %>"style="text-decoration: none;">Back to Profile Page</a></button>
 </body>
 </html>

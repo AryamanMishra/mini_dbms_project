@@ -1,4 +1,4 @@
-get product name from product id in user cart in GET method of /users/:id/cart
-complete order functionality by getting user details from req.user
+c̶o̶m̶p̶l̶e̶t̶e̶ o̶r̶d̶e̶r̶ f̶u̶n̶c̶t̶i̶o̶n̶a̶l̶i̶t̶y̶ b̶y̶ g̶e̶t̶t̶i̶n̶g̶ u̶s̶e̶r̶ d̶e̶t̶a̶i̶l̶s̶ f̶r̶o̶m̶ r̶e̶q̶.̶c̶o̶o̶k̶i̶e̶s̶
 complete middleware
-replace order with add to cart in categories and add products in cart and then add order button
+r̶e̶p̶l̶a̶c̶e̶ o̶r̶d̶e̶r̶ w̶i̶t̶h̶ a̶d̶d̶ t̶o̶ c̶a̶r̶t̶ i̶n̶ c̶a̶t̶e̶g̶o̶r̶i̶e̶s̶ a̶n̶d̶ a̶d̶d̶ p̶r̶o̶d̶u̶c̶t̶s̶ i̶n̶ c̶a̶r̶t̶ a̶n̶d̶ t̶h̶e̶n̶ a̶d̶d̶ o̶r̶d̶e̶r̶ b̶u̶t̶t̶o̶n̶
+properly show orders.ejs 

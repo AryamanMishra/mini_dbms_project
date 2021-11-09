@@ -18,7 +18,10 @@ router.get('/users/:customer_id/transactions', (req,res) => {
     connectdb.query(sql, (err,result) => {
         if (err) throw err
         const transactions = result.rows
-        res.render('user/transactions', {transactions,customer_id})
+        if (transactions.length === 0)
+            res.send('No transactions yet')
+        else 
+            res.render('user/transactions', {transactions,customer_id})
     })
 })
 

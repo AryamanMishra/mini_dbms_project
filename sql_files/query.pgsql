@@ -55,6 +55,7 @@ select * from cart_item
 delete from cart_item
 
 
+
 create table product(
     product_id varchar primary key,
     product_name varchar not null,
@@ -95,7 +96,6 @@ create table order_details (
 )
 select * from order_details
 delete from order_details
-
 
 
 

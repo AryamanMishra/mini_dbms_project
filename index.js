@@ -53,21 +53,13 @@ app.get('/', (req,res) => {
 
 
 const loginRoute = require('./routes/login')
-
 const signupRoute = require('./routes/signup')
-
 const userHome = require('./routes/user/home')
-
 const userCart = require('./routes/user/cart')
-
-const userOrders = require('./routes/user/orders')
-
-const userTransactions = require('./routes/user/transactions')
-
 const categories = require('./routes/categories')
-
+const userOrders = require('./routes/user/orders')
+const userTransactions = require('./routes/user/transactions')
 const seller = require('./routes/seller')
-
 const products = require('./routes/products')
 
 
@@ -89,6 +81,8 @@ app.use('/', userTransactions)
 app.use('/', seller)
 
 app.use('/', products)
+
+
 
 
 

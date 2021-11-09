@@ -1,3 +1,4 @@
 get product name from product id in user cart in GET method of /users/:id/cart
 complete order functionality by getting user details from req.user
 complete middleware
+replace order with add to cart in categories and add products in cart and then add order button

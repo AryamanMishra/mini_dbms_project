@@ -20,10 +20,20 @@ router.get('/users/:customer_id/orders', (req,res) => {
         const product_ids_array = []
         for (p of product_ids)
             product_ids_array.push(p.product_id)
+        // let product_details_sql = 
+        // `
+        //     // select * from product where product_id in (select product_id from order_details where customer_id = '${customer_id}')
+        // `
         let product_details_sql = 
         `
-            select * from product where product_id in (select product_id from order_details where customer_id = '${customer_id}')
+            select 
+            * 
+            from product as a
+            right join (select product_id from order_details where customer_id = '${customer_id}')
+            as b
+            on a.product_id = b.product_id
         `
+
         connectdb.query(product_details_sql, (err, result) => {
             if (err) throw err
             const product_details = result.rows
@@ -34,6 +44,7 @@ router.get('/users/:customer_id/orders', (req,res) => {
             connectdb.query(sql, (err,result) => { 
                 const orders = result.rows
                 console.log(product_details)
+                console.log(orders);
                 res.render('user/orders', {orders,customer_id, product_details})
             })
         })

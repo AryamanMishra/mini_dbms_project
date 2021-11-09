@@ -94,6 +94,7 @@ create table order_details (
     foreign key(cart_id) references cart(cart_id) 
 )
 select * from order_details
+delete from order_details
 
 
 

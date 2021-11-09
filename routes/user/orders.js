@@ -43,8 +43,8 @@ router.get('/users/:customer_id/orders', (req,res) => {
             `
             connectdb.query(sql, (err,result) => { 
                 const orders = result.rows
-                console.log(product_details)
-                console.log(orders);
+                // console.log(product_details)
+                // console.log(orders);
                 res.render('user/orders', {orders,customer_id, product_details})
             })
         })
@@ -83,7 +83,7 @@ router.post('/categories/:category_name/product', (req,res) => {
         ('${order_id}','${date}','${customer_id}','${product_id}','${total_price}','${total_discount}','${transaction_id}','${cart_id}') 
     `   
         connectdb.query(order_sql, (err,result) => {
-            if (err) console.log('e')
+            if (err) console.log(err)
             res.redirect(`/users/${customer_id}/orders`)
         })
     })

@@ -9,6 +9,7 @@ const { v4: uuidv4 } = require('uuid');
 
 
 router.get('/categories', (req,res) => {
+    let customer_id = req.cookies.customer_id
     let sql = 
     `
         select * from category
@@ -16,7 +17,7 @@ router.get('/categories', (req,res) => {
     connectdb.query(sql, (err,result) => {
         if (err) throw err
         const categories = result.rows
-        res.render('categories', {categories})
+        res.render('categories', {categories,customer_id})
         // console.log(result.rows)
     })
 })

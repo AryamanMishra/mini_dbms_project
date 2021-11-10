@@ -39,7 +39,7 @@ router.get('/users/:customer_id/orders', (req,res) => {
             `
             connectdb.query(sql, (err,result) => { 
                 const orders = result.rows
-                // console.log(product_details)
+                console.log(product_details)
                 // console.log(orders);
                 if (orders.length === 0)
                     res.send('No orders yet')

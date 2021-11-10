@@ -7,11 +7,26 @@
     <title>Your Orders</title>
 </head>
 <body>
-        <%= customer_id %> 
-        <br>
-        <%= orders[0].order_id %>
-        <br> 
-        <%= product_details %> 
-        <button><a href="/users/<%= customer_id %>" style="text-decoration: none;">Back to User Page</a></button>
+    <ol>
+		<% for (let c=0;c<orders.length;c++) { %>
+			<li>
+				Order Id: <%= orders[c].order_id %> 
+				<br>
+				Order Date: <%= orders[c].order_date %> 
+				<br>
+				Total Price: <%= orders[c].total_price %> 
+				<br>
+				Product Details: 
+				<br>
+				Product Name: <%= product_details[c].product_name %> 
+				<br>
+				Company: <%= product_details[c].brand %> 
+				<br>
+				<br>
+			</li>
+		<% } %>  
+	</ol>    
+	<br>
+    <button><a href="/users/<%= customer_id %>" style="text-decoration: none;">Back to User Page</a></button>
 </body>
 </html>

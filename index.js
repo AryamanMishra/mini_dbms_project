@@ -38,12 +38,6 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 
-// app.use(session({secret: "secret"}));
-
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-
 
 /* Home page */
 app.get('/', (req,res) => {

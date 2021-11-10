@@ -20,10 +20,6 @@ router.get('/users/:customer_id/orders', (req,res) => {
         const product_ids_array = []
         for (p of product_ids)
             product_ids_array.push(p.product_id)
-        // let product_details_sql = 
-        // `
-        //     // select * from product where product_id in (select product_id from order_details where customer_id = '${customer_id}')
-        // `
         let product_details_sql = 
         `
             select 
@@ -53,6 +49,7 @@ router.get('/users/:customer_id/orders', (req,res) => {
         })
     })
 })
+
 
 
 router.post('/order', (req,res) => {

@@ -10,19 +10,19 @@
     <h1>Total Cost of Cart: <%= total_cost %></h1>
     <h1>Cart Items: </h1>
     <ol>
-        <% for (p of product_details) {%> 
+        <% for (let p=0;p<product_details.length;p++) {%> 
             <form action="/order" method="post">
-                <input type="text" hidden name="product_id" value="<%= p.product_id %>">
-                <li>Name: <input type="text" hidden name="product_name" value="<%=p.product_name %>"><%=p.product_name %>
+                <input type="text" hidden name="product_id" value="<%= product_details[p].product_id %>">
+                <li>Name: <input type="text" hidden name="product_name" value="<%= product_details[p].product_name %>"><%=product_details[p].product_name %>
                 <br>
-                Company: <input type="text" hidden name="brand" value="<%= p.brand %>"><%= p.brand %>
+                Company: <input type="text" hidden name="brand" value="<%= product_details[p].brand %>"><%= product_details[p].brand %>
                 <br>
-                Price: &#8377;<input type="text" hidden name="price" value="<%= p.price %>"><%= p.price %>
+                Price: &#8377;<input type="text" hidden name="price" value="<%= product_details[p].price %>"><%= product_details[p].price %>
                 <br>
-                Discount: &#8377;<input type="text" hidden name="discount" value="<%= p.discount %>"><%= p.discount %>
+                Discount: &#8377;<input type="text" hidden name="discount" value="<%= product_details[p].discount %>"><%= product_details[p].discount %>
                 <br>
                 Is It available: 
-                    <% if (p.availability === true) { %>
+                    <% if (product_details[p].availability === true) { %>
                         Yes 
                     <% } else { %>
                         No   
@@ -30,7 +30,19 @@
                 <br>
                 </li>   
                 <br>
+                <% for (let c=0;c<cart_items.length;c++) { %>
+                    <% if (product_details[p].product_id === cart_items[c].product_id) { %>
+                        Product Id: <%= cart_items[c].product_id %>
+                        <br>
+                        Quantity: <%= cart_items[c].quantity %>  
+                        <% break %>
+                    <% } %>  
+                <% } %> 
+                <br>
+                <br> 
                 <button type="submit">Order</button>
+                <br/>
+                <br>
             </form>
         <% } %> 
     </ol>

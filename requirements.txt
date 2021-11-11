@@ -1,4 +1,4 @@
 c̶o̶m̶p̶l̶e̶t̶e̶ o̶r̶d̶e̶r̶ f̶u̶n̶c̶t̶i̶o̶n̶a̶l̶i̶t̶y̶ b̶y̶ g̶e̶t̶t̶i̶n̶g̶ u̶s̶e̶r̶ d̶e̶t̶a̶i̶l̶s̶ f̶r̶o̶m̶ r̶e̶q̶.̶c̶o̶o̶k̶i̶e̶s̶
 r̶e̶p̶l̶a̶c̶e̶ o̶r̶d̶e̶r̶ w̶i̶t̶h̶ a̶d̶d̶ t̶o̶ c̶a̶r̶t̶ i̶n̶ c̶a̶t̶e̶g̶o̶r̶i̶e̶s̶ a̶n̶d̶ a̶d̶d̶ p̶r̶o̶d̶u̶c̶t̶s̶ i̶n̶ c̶a̶r̶t̶ a̶n̶d̶ t̶h̶e̶n̶ a̶d̶d̶ o̶r̶d̶e̶r̶ b̶u̶t̶t̶o̶n̶
-properly show orders.ejs a̶n̶d̶ t̶r̶a̶n̶s̶a̶c̶t̶i̶o̶n̶s̶.̶e̶j̶s̶
-multiply price and discount by quantity
+p̶r̶o̶p̶e̶r̶l̶y̶ s̶h̶o̶w̶ o̶r̶d̶e̶r̶s̶.̶e̶j̶s̶ a̶n̶d̶ t̶r̶a̶n̶s̶a̶c̶t̶i̶o̶n̶s̶.̶e̶j̶s̶
+m̶u̶l̶t̶i̶p̶l̶y̶ p̶r̶i̶c̶e̶ a̶n̶d̶ d̶i̶s̶c̶o̶u̶n̶t̶ b̶y̶ q̶u̶a̶n̶t̶i̶t̶y̶

@@ -8,17 +8,37 @@
 </head>
 <body>
     <form action="/signup" method="post">
-        Name : <input type="text" name="name" id="customer_name">
+        <label for="customer_name">Name:</label>
+        <input type="text" name="name" id="customer_name" placeholder="Your name">
         <br>
-        Phone Number : <input type="text" name="phone_no" id="phone_no"> 
+        <label for="phone_no">Phone Number: </label>
+        <input type="text" name="phone_no" id="phone_no" placeholder="Your phone no."> 
         <br>
-        Address : <input type="text" name="address" id="address"> 
+        <label for="address">Address: </label>
+        <input type="text" name="address" id="address" placeholder="Your home address"> 
         <br>
-        Password : <input type="password" name="password" id="password"> 
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password" placeholder="Your website password"> 
+        <button onclick="show()" type="button" id="showpasswordbutton">Show password</button>
         <br>
-        Email id : <input type="text" name="email_id" id="email_id"> 
+        <label for="email_id">Email Id:</label>
+        <input type="text" name="email_id" id="email_id" placeholder="Your email address"> 
         <br>
         <button>SUBMIT</button>
     </form>
 </body>
+<script>
+    function show() {
+        let password = document.getElementById('password')
+        let showpasswordbutton = document.getElementById('showpasswordbutton')
+        if (password.type == 'password') {
+            password.type = 'text'
+            showpasswordbutton.textContent = 'Hide Password'
+        }
+        else {
+            password.type = 'password'
+            showpasswordbutton.textContent = 'Show Password'
+        }
+    }
+</script>
 </html>

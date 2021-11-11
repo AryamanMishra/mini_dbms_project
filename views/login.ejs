@@ -8,12 +8,29 @@
 </head>
 <body>
     <form action="/login" method="post">
-        Email : <input type="text" name="email_id" id="email_id">
+        <label for="email_id">Email id:</label>
+        <input type="text" name="email_id" id="email_id" placeholder="Your website email id">
         <br>
-        Password : <input type="password" name="password" id="password"> 
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password" placeholder="Your website password"> 
+        <button onclick="show()" type="button" id="showpasswordbutton">Show password</button>
         <br>
         <br>    
         <button>Submit</button>
     </form>
 </body>
+<script>
+    function show() {
+        let password = document.getElementById('password')
+        let showpasswordbutton = document.getElementById('showpasswordbutton')
+        if (password.type == 'password') {
+            password.type = 'text'
+            showpasswordbutton.textContent = 'Hide Password'
+        }
+        else {
+            password.type = 'password'
+            showpasswordbutton.textContent = 'Show Password'
+        }
+    }
+</script>
 </html>

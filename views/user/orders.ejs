@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Orders</title>
 </head>
-<body>
+<body> 
+	<% let q = 0 %> 
     <ol>
 		<% for (let c=0;c<orders.length;c++) { %>
 			<li>
@@ -14,7 +15,16 @@
 				<br>
 				Order Date: <%= orders[c].order_date %> 
 				<br>
-				Total Price: <%= orders[c].total_price %> 
+				Quantity:
+				<% for (let p=0;p<quantities.length;p++) { %>
+					<% if (orders[c].product_id === quantities[p].product_id)  {%> 
+						<%= quantities[p].quantity %> 
+						<% q = quantities[p].quantity %> 
+						<% break %> 
+					<% } %> 
+				<% } %>  
+				<br> 
+				Total Price: <%= (orders[c].total_price - orders[c].total_discount)*q %> 
 				<br>
 				Product Details: 
 				<br>

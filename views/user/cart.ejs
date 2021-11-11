@@ -7,8 +7,8 @@
     <title>Your Cart</title>
 </head>
 <body>
-    <h1>Total Cost of Cart: <%= total_cost %></h1>
-    <h1>Cart Items: </h1>
+    <h2>Total Cost of Cart: &#8377;<%= total_cost %></h2>
+    <h2>Cart Items: </h2>
     <ol>
         <% for (let p=0;p<product_details.length;p++) {%> 
             <form action="/order" method="post">

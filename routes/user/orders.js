@@ -20,6 +20,7 @@ router.get('/users/:customer_id/orders', (req,res) => {
         const product_ids_array = []
         for (p of product_ids)
             product_ids_array.push(p.product_id)
+        let ids = product_ids_array.join("','", product_ids_array)
         let product_details_sql = 
         `
             select 
@@ -38,13 +39,22 @@ router.get('/users/:customer_id/orders', (req,res) => {
                 select * from order_details where customer_id = '${customer_id}'
             `
             connectdb.query(sql, (err,result) => { 
+                if (err) throw err
                 const orders = result.rows
-                console.log(product_details)
+                // console.log(product_details)
                 // console.log(orders);
-                if (orders.length === 0)
-                    res.send('No orders yet')
-                else 
-                    res.render('user/orders', {orders,customer_id, product_details})
+                let quantity_sql = 
+                `
+                    select quantity,product_id from cart_item where product_id in ('${ids}')
+                `
+                connectdb.query(quantity_sql, (err,result) => {
+                    if (err) throw err
+                    let quantities = (result.rows)
+                    if (orders.length === 0)
+                        res.send('No orders yet')
+                    else 
+                        res.render('user/orders', {orders,customer_id, product_details,quantities})
+                })
             })
         })
     })

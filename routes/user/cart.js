@@ -52,8 +52,14 @@ router.get('/users/:id/cart', (req,res) => {
                 connectdb.query(sql, (err,result) => {
                     if (err) throw err
                     let product_details = result.rows
-                    // console.log(cart_items)
+                    //console.log(cart_items)
                     // console.log(product_details)
+                    for (let i=0;i<cart_items.length;i++) {
+                        for (let j=0;j<product_details.length;j++) {
+                            if (cart_items[i].product_id === product_details[j].product_id)
+                                total_cost += cart_items[i].quantity*(product_details[j].price - product_details[j].discount)
+                        }
+                    }
                     res.render('user/cart', {total_cost,cart_items, customer_id, product_details})
                 })
                

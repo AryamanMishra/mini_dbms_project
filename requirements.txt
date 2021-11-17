@@ -3,4 +3,4 @@ r̶e̶p̶l̶a̶c̶e̶ o̶r̶d̶e̶r̶ w̶i̶t̶h̶ a̶d̶d̶ t̶o̶ c̶a̶r̶t̶
 p̶r̶o̶p̶e̶r̶l̶y̶ s̶h̶o̶w̶ o̶r̶d̶e̶r̶s̶.̶e̶j̶s̶ a̶n̶d̶ t̶r̶a̶n̶s̶a̶c̶t̶i̶o̶n̶s̶.̶e̶j̶s̶
 m̶u̶l̶t̶i̶p̶l̶y̶ p̶r̶i̶c̶e̶ a̶n̶d̶ d̶i̶s̶c̶o̶u̶n̶t̶ b̶y̶ q̶u̶a̶n̶t̶i̶t̶y̶
 
-add documentation orders.js, transactions.js
+add documentation in orders.js, transactions.js

@@ -1,20 +1,26 @@
-/* Basic modules requiring */
-/* Doc to be added */
-/* Views folder is only for additional testing and should be removed later */
+/* mini dbms e-commerce source */
 
+
+/* Basic modules requiring */
 const express = require('express')
 const app = express()
 const path = require('path')
 const connectdb = require('./db_files/connect') // connect file connects to pgsql
+
+/* Both added to generate unique ids */
 const uniqid = require('uniqid')
 const { v4: uuidv4 } = require('uuid');
+
+/* express session npm package */
 const session = require("express-session");
+
+/* auth file */
 const auth = require('./middleware/auth')
 
 
 
 
-// inbuilt connect function 
+// inbuilt connect function of pg npm package
 connectdb.connect((err) => {
     if (err) throw err
     console.log('pgsql connection confirmed')
@@ -22,14 +28,15 @@ connectdb.connect((err) => {
 
 
 
+
 /* Setting views repo for ejs */
-/* To be handled in frontend later */
 app.set('view engine', 'ejs')
+
+/* setting path to the views folder */
 app.set('views', path.join(__dirname,'views'))
 
 
 /* For static files */
-/* To be handled in frontend later */
 app.use(express.static(__dirname + '/public'));
 
 
@@ -45,18 +52,41 @@ app.get('/', (req,res) => {
 })
 
 
-
+/* requiring login route */
 const loginRoute = require('./routes/login')
+
+/* requiring signup route */
 const signupRoute = require('./routes/signup')
+
+/* requiring user home route */
 const userHome = require('./routes/user/home')
+
+/* requiring user cart route */
 const userCart = require('./routes/user/cart')
+
+/* requiring categories route */
 const categories = require('./routes/categories')
+
+/* requiring user orders route */
 const userOrders = require('./routes/user/orders')
+
+/* requiring user transactions route */
 const userTransactions = require('./routes/user/transactions')
+
+/* requiring seller route */
 const seller = require('./routes/seller')
+
+/* requiring products route */
 const products = require('./routes/products')
 
 
+/* 
+
+    calling all the routed by app.use and linking them directly to the / route.
+    This simply means if suppose login route has app.get('/login',..),
+    app.use directly go to /login route only.
+
+*/
 
 app.use('/', loginRoute)
 

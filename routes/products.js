@@ -1,3 +1,5 @@
+
+/* Basic module requiring */
 const {Router} = require('express')
 const express = require("express");
 const router = express.Router();
@@ -8,10 +10,12 @@ const { v4: uuidv4 } = require('uuid');
 
 
 
-
+/* Getting all the products of a particular category */
 router.get('/categories/:name', (req,res) => {
     const customer_id = req.cookies.customer_id
-    const category_name =  req.params.name
+    const category_name =  req.params.name // getting category name from the parameters
+
+    /* getting category id */
     let category_id_sql = 
     `
         select category_id from category
@@ -19,6 +23,9 @@ router.get('/categories/:name', (req,res) => {
     `
     connectdb.query(category_id_sql, (err,result) => {
         const category_id = result.rows[0].category_id
+
+
+        /* getting products from the above mentioned id */
         let cat_prod = 
         `
             select product_id,product_name,brand,price,discount,availability
@@ -26,12 +33,12 @@ router.get('/categories/:name', (req,res) => {
         `
         connectdb.query(cat_prod, (err,result) => {
             if (err) throw err
-            const products = result.rows
-            res.render('products',{products,category_name, customer_id})
+            const products = result.rows // products
+            res.render('products',{products,category_name, customer_id}) //rendering products page
         })
     })
 })
 
 
 
-module.exports = router
+module.exports = router // exporting router

@@ -1,3 +1,5 @@
+
+/* Basic module requiring */
 const {Router} = require('express')
 const express = require("express");
 const passport = require('passport');
@@ -8,6 +10,7 @@ const auth = require('../middleware/auth')
 const cookieParser = require('cookie-parser')
 
 router.use(cookieParser())
+
 
 /* Getting login page */
 router.get('/login',(req,res,next) => {
@@ -39,7 +42,9 @@ router.post('/login',(req,res) => {
                 const customer_id = result.rows[0].customer_id
                 // console.log(customer_id);
                 const cart_id = result.rows[0].cart_id
-                res.cookie('customer_id', customer_id)
+
+                /* saving cookies upon logging */
+                res.cookie('customer_id', customer_id) 
                 res.cookie('cart_id', cart_id)
                 res.redirect(`/users/${customer_id}`)
             }
@@ -52,4 +57,4 @@ router.post('/login',(req,res) => {
 
 
 
-module.exports = router
+module.exports = router  // exporting router

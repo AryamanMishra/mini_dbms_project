@@ -1,3 +1,5 @@
+
+/* Basic module requiring */
 const {Router, application} = require('express')
 const express = require("express");
 const router = express.Router();
@@ -10,6 +12,7 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser')
 
 router.use(cookieParser())
+
 
 /* Getting singup page */
 router.get('/signup',(req,res,next) => {
@@ -28,14 +31,17 @@ router.post('/signup', (req,res) => {
         connectdb.query(sql, (err,result) => {
             if (err) throw err
 
-            /* Below lines checks if above query was empty or not */
+            /* Below lines checks if above query result was empty or not */
             if (JSON.stringify(result.rows) === '[]') {
                 const customer_id = uniqid()
                 const cart_id = uniqid()
                 // console.log(body)
+
+                /* setting cookies */
                 res.cookie('customer_id', customer_id)
                 res.cookie('cart_id', cart_id)
-                /* If no user was found this query creates a new user and inserts it in customer table */
+
+                /* If no user was found this query creates a new user cart and inserts it in cart table */
                 let cart_sql = 
                 `
                     INSERT INTO CART(cart_id,total_cost)
@@ -45,6 +51,8 @@ router.post('/signup', (req,res) => {
                 connectdb.query(cart_sql, (err,result) => {
                     if (err) throw err
                 })
+
+                /* If no user was found this query creates a new user and inserts it in customer table */
                 let sql = 
                 `
                     INSERT INTO customer(customer_id,name,phone_no,address,cart_id,password,email_id) 
@@ -54,7 +62,7 @@ router.post('/signup', (req,res) => {
                 connectdb.query(sql, (err,result) => {
                     if (err) throw err;
                     console.log('user saved in db')
-                    res.redirect(`/users/${customer_id}`)  // redirections to be handled in frontend
+                    res.redirect(`/users/${customer_id}`)  
                 })
             }
             else {
@@ -72,4 +80,4 @@ router.post('/signup', (req,res) => {
 })
 
 
-module.exports = router
+module.exports = router  // exporting router

@@ -1,3 +1,5 @@
+
+/* Basic module requiring */
 const {Router} = require('express')
 const express = require("express");
 const router = express.Router();
@@ -8,6 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 
 
 
+/* getting categories page */
 router.get('/categories', (req,res) => {
     let customer_id = req.cookies.customer_id
     let sql = 
@@ -17,10 +20,10 @@ router.get('/categories', (req,res) => {
     connectdb.query(sql, (err,result) => {
         if (err) throw err
         const categories = result.rows
-        res.render('categories', {categories,customer_id})
+        res.render('categories', {categories,customer_id}) // rendering categories page 
         // console.log(result.rows)
     })
 })
 
 
-module.exports = router
+module.exports = router  // exporting router

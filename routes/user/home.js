@@ -1,3 +1,5 @@
+
+/* Basic modules requiring */
 const {Router} = require('express')
 const express = require("express");
 const router = express.Router();
@@ -8,10 +10,13 @@ const { v4: uuidv4 } = require('uuid');
 
 
 
-
+/* GET route to obtain user home page */
 router.get('/users/:id', (req,res) => {
-    const customer_id = req.cookies.customer_id
+    const customer_id = req.cookies.customer_id // getting customer id from cookies 
     let customer_name = ''
+    
+
+    /* query to get customer name */
     let sql =
     `
         SELECT name from customer where customer_id = '${customer_id}'
@@ -19,7 +24,7 @@ router.get('/users/:id', (req,res) => {
     connectdb.query(sql, (err,result) => {
         if (err) throw err
         customer_name = result.rows[0].name
-        res.render('user/home', {customer_id,customer_name})
+        res.render('user/home', {customer_id,customer_name}) // rendering customer home page ejs file
     })
 })
 

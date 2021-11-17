@@ -1,3 +1,5 @@
+
+/* Basic module requiring */
 const {Router} = require('express')
 const express = require("express");
 const router = express.Router();
@@ -8,7 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 
 
 
-
+/* Getting sellers page */
 router.get('/seller', (req,res) => {
     let sql =
     `
@@ -22,4 +24,4 @@ router.get('/seller', (req,res) => {
 })
 
 
-module.exports = router
+module.exports = router  // exporting router

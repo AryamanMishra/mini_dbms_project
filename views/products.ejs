@@ -13,6 +13,13 @@
     </title>
 </head>
 <body>
+    <h1>
+        <% if(category_name[category_name.length - 1] === 's' ) { %> 
+            <%= category_name.substring(0,category_name.length - 1) %> Products 
+        <% } else { %>
+            <%= category_name %> Products 
+        <% } %> 
+    </h1>
     <ol>
         <% for (let p of products) {%>
             <form action="/cart" method="post">

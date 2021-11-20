@@ -8,9 +8,11 @@ const { v4: uuidv4 } = require('uuid');
 
 
 
-
+/* get route to get all the orders placed by the user */
 router.get('/users/:customer_id/orders', (req,res) => {
-    const customer_id = req.cookies.customer_id
+    const customer_id = req.cookies.customer_id // getting customer id from cookies
+
+    /* getting product id */
     let product_ids_sql = 
     `
         select product_id from order_details where customer_id = '${customer_id}'
@@ -20,7 +22,11 @@ router.get('/users/:customer_id/orders', (req,res) => {
         const product_ids_array = []
         for (p of product_ids)
             product_ids_array.push(p.product_id)
+
+        /* comma seperating ids */
         let ids = product_ids_array.join("','", product_ids_array)
+
+        /* getting the product details by the id obtained above */
         let product_details_sql = 
         `
             select 
@@ -34,6 +40,8 @@ router.get('/users/:customer_id/orders', (req,res) => {
         connectdb.query(product_details_sql, (err, result) => {
             if (err) throw err
             const product_details = result.rows
+
+            /* getting order details from the customer id */
             let sql = 
             `
                 select * from order_details where customer_id = '${customer_id}'
@@ -43,6 +51,8 @@ router.get('/users/:customer_id/orders', (req,res) => {
                 const orders = result.rows
                 // console.log(product_details)
                 // console.log(orders);
+
+                /* getting product quantity from order details by using ids */
                 let quantity_sql = 
                 `
                     select quantity,product_id from cart_item where product_id in ('${ids}')
@@ -62,21 +72,38 @@ router.get('/users/:customer_id/orders', (req,res) => {
 
 
 
+/* post method for placing new order */
 router.post('/order', (req,res) => {
+
+    /* cookie data parsed */
     const customer_id = req.cookies.customer_id
     const cart_id = req.cookies.cart_id
     // console.log(customer_id)
+
+    /* unique order id */
     const order_id = uuidv4()
+
+    /* code to obtain current date and time */
     let date = new Date();
     const dd = String(date.getDate()).padStart(2, '0');
     const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
     const yyyy = date.getFullYear();
     date = mm + '/' + dd + '/' + yyyy;
+    /* code to obtain current date and time */
+
+    /* getting details from request body */
     const product_id = req.body.product_id
     const total_price = req.body.price
     const total_discount = req.body.discount
+
+    /* unique transaction id */
     const transaction_id = uuidv4()
+
+    /* discount deducted */
     let total_amount = total_price - total_discount
+
+
+    /* transaction placed before order */
     let transaction_sql = 
     `
         insert into transaction
@@ -85,6 +112,8 @@ router.post('/order', (req,res) => {
     
     connectdb.query(transaction_sql, (err,result) => {
         if (err) throw err
+
+        /* query to insert new order */
         let order_sql = 
     `
         insert into order_details
@@ -101,4 +130,4 @@ router.post('/order', (req,res) => {
 
 
 
-module.exports = router
+module.exports = router // router exported

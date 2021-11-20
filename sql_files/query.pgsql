@@ -39,7 +39,7 @@ create table transaction(
     references cart(cart_id)
 )
 select * from transaction
-delete from transaction
+
 
 
 create table cart_item (
@@ -52,7 +52,7 @@ create table cart_item (
     references cart(cart_id)
 )
 select * from cart_item
-delete from cart_item
+
 
 
 
@@ -89,13 +89,17 @@ create table order_details (
     total_discount float not null,
     transaction_id varchar not null,
     cart_id varchar not null,
-    foreign key(customer_id) references customer(customer_id),
-    foreign key(transaction_id) references transaction(transaction_id),
-    foreign key(product_id) references product(product_id),
-    foreign key(cart_id) references cart(cart_id) 
+    foreign key(customer_id) 
+    references customer(customer_id),
+    foreign key(transaction_id) 
+    references transaction(transaction_id),
+    foreign key(product_id) 
+    references product(product_id),
+    foreign key(cart_id) 
+    references cart(cart_id) 
 )
 select * from order_details
-delete from order_details
+
 
 
 

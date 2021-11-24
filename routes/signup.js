@@ -44,9 +44,9 @@ router.post('/signup', (req,res) => {
                 /* If no user was found this query creates a new user cart and inserts it in cart table */
                 let cart_sql = 
                 `
-                    INSERT INTO CART(cart_id,total_cost)
+                    INSERT INTO CART(cart_id,total_cost,customer_id)
                     VALUES
-                    ('${cart_id}',0.0)
+                    ('${cart_id}',0.0,'${customer_id}')
                 `
                 connectdb.query(cart_sql, (err,result) => {
                     if (err) throw err

@@ -18,7 +18,6 @@ create table customer(
 select * from customer
 
 
-
 create table cart(
     cart_id varchar primary key,
 	total_cost float
@@ -52,7 +51,7 @@ create table cart_item (
     references cart(cart_id)
 )
 select * from cart_item
-
+delete from cart_item
 
 
 

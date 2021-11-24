@@ -12,26 +12,30 @@ const { v4: uuidv4 } = require('uuid');
 
 /* GET route to obtain user cart page */
 router.get('/users/:id/cart', (req,res) => {
-    const customer_id = req.cookies.customer_id // getting customer id been stored in cookies
-    
+    const customer_id = req.params.id // getting customer id been stored in cookies
+    let cart_id = null
+
     /* basic sql query variable */
     let sql =
     `
         select
-            a.total_cost
+            a.total_cost,
+            a.cart_id
             from cart as a
             inner join customer as b
             on a.cart_id = b.cart_id
             where b.customer_id = '${customer_id}'
+            and a.cart_id = b.cart_id
     `
 
     /* running the above query */
     connectdb.query(sql, (err,result) => {
         if (err) throw err
         let total_cost = 0
-        if (result.rows.length !== 0)
+        if (result.rows.length !== 0) {
+            cart_id = result.rows[0].cart_id
             total_cost = result.rows[0].total_cost
-
+        }
         /* getting cart items */
         let cart_item_sql = 
         `
@@ -41,6 +45,7 @@ router.get('/users/:id/cart', (req,res) => {
             from cart_item as a
             inner join cart as b
             on a.cart_id = b.cart_id
+            where a.cart_id = '${cart_id}'
         `
         connectdb.query(cart_item_sql, (err,result) => {
             if (err) throw err

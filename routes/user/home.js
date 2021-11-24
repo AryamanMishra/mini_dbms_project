@@ -12,7 +12,7 @@ const { v4: uuidv4 } = require('uuid');
 
 /* GET route to obtain user home page */
 router.get('/users/:id', (req,res) => {
-    const customer_id = req.cookies.customer_id // getting customer id from cookies 
+    const customer_id = req.params.id // getting customer id from cookies 
     let customer_name = ''
     
 
@@ -23,8 +23,13 @@ router.get('/users/:id', (req,res) => {
     `
     connectdb.query(sql, (err,result) => {
         if (err) throw err
-        customer_name = result.rows[0].name
-        res.render('user/home', {customer_id,customer_name}) // rendering customer home page ejs file
+        if (result.rows.length === 0) {
+            res.send('User not found')
+        }
+        else {
+            customer_name = result.rows[0].name
+            res.render('user/home', {customer_id,customer_name}) // rendering customer home page ejs file
+        }
     })
 })
 

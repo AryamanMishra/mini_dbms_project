@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt')
 const session = require("express-session");
 
 
-
+/* post method to logout a user with proper destroying of session contents */
 router.post('/logout', (req,res) => {
     req.session.destroy()
     res.redirect('/')

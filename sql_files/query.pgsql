@@ -16,6 +16,7 @@ create table customer(
     references cart(cart_id)
 )
 select * from customer
+delete from customer
 
 
 create table cart(
@@ -38,8 +39,7 @@ create table transaction(
     references cart(cart_id)
 )
 select * from transaction
-
-
+delete from transaction
 
 create table cart_item (
     product_id varchar not null,
@@ -98,6 +98,7 @@ create table order_details (
     references cart(cart_id) 
 )
 select * from order_details
+delete from order_details
 
 
 

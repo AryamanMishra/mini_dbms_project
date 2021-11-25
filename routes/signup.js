@@ -3,13 +3,12 @@
 const {Router, application} = require('express')
 const express = require("express");
 const router = express.Router();
-// const bcryptjs = require("bcryptjs");
 const connectdb = require('../db_files/connect') // connect file connects to pgsql
 const uniqid = require('uniqid')
 const { v4: uuidv4 } = require('uuid');
 const auth = require('../middleware/auth');
-const passport = require('passport');
 const cookieParser = require('cookie-parser')
+const bcrypt = require('bcrypt')
 
 router.use(cookieParser())
 
@@ -28,7 +27,7 @@ router.post('/signup', (req,res) => {
     /* This query searches amongst users for this email id and password */
 
     try {
-        connectdb.query(sql, (err,result) => {
+        connectdb.query(sql, async(err,result) => {
             if (err) throw err
 
             /* Below lines checks if above query result was empty or not */
@@ -44,20 +43,26 @@ router.post('/signup', (req,res) => {
                 /* If no user was found this query creates a new user cart and inserts it in cart table */
                 let cart_sql = 
                 `
-                    INSERT INTO CART(cart_id,total_cost,customer_id)
+                    INSERT INTO CART(cart_id,total_cost)
                     VALUES
-                    ('${cart_id}',0.0,'${customer_id}')
+                    ('${cart_id}',0.0)
                 `
                 connectdb.query(cart_sql, (err,result) => {
                     if (err) throw err
                 })
 
+
+                /* password stored in hash form */
+                /* 12 is the number of salt rounds */
+                const hashPassword = await bcrypt.hash(body.password,12)
+
+                
                 /* If no user was found this query creates a new user and inserts it in customer table */
                 let sql = 
                 `
                     INSERT INTO customer(customer_id,name,phone_no,address,cart_id,password,email_id) 
                     VALUES
-                    ('${customer_id}','${body.name}','${body.phone_no}','${body.address}','${cart_id}','${body.password}','${body.email_id}')
+                    ('${customer_id}','${body.name}','${body.phone_no}','${body.address}','${cart_id}','${hashPassword}','${body.email_id}')
                 `
                 connectdb.query(sql, (err,result) => {
                     if (err) throw err;
@@ -68,7 +73,7 @@ router.post('/signup', (req,res) => {
             else {
 
                 // If user was found
-                res.send('User exists')
+                res.send('Email id already exists')
                 console.log('user already exists')
                 // res.redirect(`/users/${result[0].id}`)
             }

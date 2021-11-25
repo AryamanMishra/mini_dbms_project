@@ -58,12 +58,17 @@ router.get('/users/:customer_id/transactions', (req,res) => {
                     /* if no transactions found */
                     if (transactions.length === 0)
                         res.send('No transactions yet')
-                    else 
-                        res.render('user/transactions', {transactions,customer_id,product_details,order_details})
+                    else {
+                        if (req.session.user_id) {
+                            res.render('user/transactions', {transactions,customer_id,product_details,order_details})
+                        }
+                        else {
+                            res.redirect('/login')
+                        }
+                    }
                 })
             })
         })
-        
     })
 })
 

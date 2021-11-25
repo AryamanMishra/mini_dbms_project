@@ -36,9 +36,9 @@ router.post('/signup', (req,res) => {
                 const cart_id = uniqid()
                 // console.log(body)
 
-                /* setting cookies */
-                res.cookie('customer_id', customer_id)
-                res.cookie('cart_id', cart_id)
+                // /* setting cookies */
+                // res.cookie('customer_id', customer_id)
+                // res.cookie('cart_id', cart_id)
 
                 /* If no user was found this query creates a new user cart and inserts it in cart table */
                 let cart_sql = 
@@ -56,7 +56,7 @@ router.post('/signup', (req,res) => {
                 /* 12 is the number of salt rounds */
                 const hashPassword = await bcrypt.hash(body.password,12)
 
-                
+
                 /* If no user was found this query creates a new user and inserts it in customer table */
                 let sql = 
                 `
@@ -67,6 +67,7 @@ router.post('/signup', (req,res) => {
                 connectdb.query(sql, (err,result) => {
                     if (err) throw err;
                     console.log('user saved in db')
+                    req.session.user_id = customer_id
                     res.redirect(`/users/${customer_id}`)  
                 })
             }

@@ -12,7 +12,7 @@ const { v4: uuidv4 } = require('uuid');
 
 /* Getting all the products of a particular category */
 router.get('/categories/:name', (req,res) => {
-    const customer_id = req.cookies.customer_id
+    const customer_id = req.session.user_id
     const category_name =  req.params.name // getting category name from the parameters
 
     /* getting category id */
@@ -34,7 +34,12 @@ router.get('/categories/:name', (req,res) => {
         connectdb.query(cat_prod, (err,result) => {
             if (err) throw err
             const products = result.rows // products
-            res.render('products',{products,category_name, customer_id}) //rendering products page
+            if (req.session.user_id) {
+                res.render('products',{products,category_name, customer_id}) //rendering products page
+            }
+            else {
+                res.redirect('/login')
+            }
         })
     })
 })

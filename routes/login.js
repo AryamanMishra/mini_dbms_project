@@ -7,10 +7,12 @@ const connectdb = require('../db_files/connect') // connect file connects to pgs
 const auth = require('../middleware/auth')
 const cookieParser = require('cookie-parser')
 const bcrypt = require('bcrypt')
-
+const session = require("express-session");
 
 router.use(cookieParser())
-
+// router.use(session({
+//     secret:'asecret'
+// }))
 
 /* Getting login page */
 router.get('/login',(req,res,next) => {
@@ -49,10 +51,11 @@ router.post('/login',(req,res) => {
                 if (validPassword) {
                     const customer_id = result.rows[0].customer_id
                     const cart_id = result.rows[0].cart_id
+                    req.session.user_id = customer_id
 
-                    /* saving cookies upon logging */
-                    res.cookie('customer_id', customer_id) 
-                    res.cookie('cart_id', cart_id)
+                    // /* saving cookies upon logging */
+                    // res.cookie('customer_id', customer_id) 
+                    // res.cookie('cart_id', cart_id)
                     res.redirect(`/users/${customer_id}`)
                 }
                 else {

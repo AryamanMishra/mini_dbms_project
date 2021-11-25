@@ -12,7 +12,7 @@ const { v4: uuidv4 } = require('uuid');
 
 /* GET route to obtain user home page */
 router.get('/users/:id', (req,res) => {
-    const customer_id = req.params.id // getting customer id from cookies 
+    const customer_id = req.params.id // getting customer id 
     let customer_name = ''
     
 
@@ -28,7 +28,12 @@ router.get('/users/:id', (req,res) => {
         }
         else {
             customer_name = result.rows[0].name
-            res.render('user/home', {customer_id,customer_name}) // rendering customer home page ejs file
+            if (req.session.user_id) {
+                res.render('user/home', {customer_id,customer_name}) // rendering customer home page ejs file
+            }
+            else {
+                res.redirect('/login')
+            }
         }
     })
 })

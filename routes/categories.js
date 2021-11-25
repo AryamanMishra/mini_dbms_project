@@ -12,7 +12,7 @@ const { v4: uuidv4 } = require('uuid');
 
 /* getting categories page */
 router.get('/categories', (req,res) => {
-    let customer_id = req.cookies.customer_id
+    let customer_id = req.session.user_id
     let sql = 
     `
         select * from category
@@ -20,7 +20,12 @@ router.get('/categories', (req,res) => {
     connectdb.query(sql, (err,result) => {
         if (err) throw err
         const categories = result.rows
-        res.render('categories', {categories,customer_id}) // rendering categories page 
+        if (req.session.user_id) {
+            res.render('categories', {categories,customer_id}) // rendering categories page 
+        }
+        else {
+            res.redirect('/login')
+        }
         // console.log(result.rows)
     })
 })

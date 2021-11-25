@@ -62,8 +62,14 @@ router.get('/users/:customer_id/orders', (req,res) => {
                     let quantities = (result.rows)
                     if (orders.length === 0)
                         res.send('No orders yet')
-                    else 
-                        res.render('user/orders', {orders,customer_id, product_details,quantities})
+                    else {
+                        if (req.session.user_id) {
+                            res.render('user/orders', {orders,customer_id, product_details,quantities})
+                        }
+                        else {
+                            res.redirect('/login')
+                        }
+                    }
                 })
             })
         })

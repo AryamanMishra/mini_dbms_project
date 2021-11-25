@@ -38,6 +38,11 @@ app.set('views', path.join(__dirname,'views'))
 
 /* For static files */
 app.use(express.static(__dirname + '/public'));
+app.use(session({
+    secret:'asecret',
+    resave:'yay',
+    saveUninitialized:'yay'
+}))
 
 
 /* For json formatting of data */

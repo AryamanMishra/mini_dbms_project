@@ -7,7 +7,7 @@
     <title><%= customer_name %></title>
 </head>
 <body style="text-align: left; margin-left:40%">
-    <h2 style="margin-left:-10% ;">Hello <%= customer_name %> (user id : <%= customer_id %>)</h2>
+    <h2 style="margin-left:-15% ;">Logged In as <%= customer_name %> (user id : <%= customer_id %>)</h2>
     <br>
     <br>
     <button style="text-align: center;"><a href="/categories" style="text-decoration: none;">View Product Categories</a></button>
@@ -18,6 +18,10 @@
     <br>
     <button><a href="/users/<%= customer_id %>/transactions" style="text-decoration: none;">View Your Transactions History</a></button>
     <br>
-    <button><a href="/" style="text-decoration: none;">Back to login/signup page</a></button>
+    <br>
+    <br>
+    <form action="/logout" method="post">
+        <button type="submit" style="cursor: pointer;">Sign Out</a></button>
+    </form>
 </body>
 </html>

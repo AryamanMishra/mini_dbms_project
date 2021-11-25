@@ -5,11 +5,12 @@ const router = express.Router();
 const connectdb = require('../../db_files/connect') // connect file connects to pgsql
 const uniqid = require('uniqid')
 const { v4: uuidv4 } = require('uuid');
+const requireLogin = require('../../middleware/requireLogin')
 
 
 
 /* get route to get all the orders placed by the user */
-router.get('/users/:customer_id/orders', (req,res) => {
+router.get('/users/:customer_id/orders', requireLogin, (req,res) => {
     const customer_id = req.cookies.customer_id // getting customer id from cookies
 
     /* getting product id */
@@ -60,16 +61,7 @@ router.get('/users/:customer_id/orders', (req,res) => {
                 connectdb.query(quantity_sql, (err,result) => {
                     if (err) throw err
                     let quantities = (result.rows)
-                    if (orders.length === 0)
-                        res.send('No orders yet')
-                    else {
-                        if (req.session.user_id) {
-                            res.render('user/orders', {orders,customer_id, product_details,quantities})
-                        }
-                        else {
-                            res.redirect('/login')
-                        }
-                    }
+                    res.render('user/orders', {orders,customer_id, product_details,quantities})
                 })
             })
         })

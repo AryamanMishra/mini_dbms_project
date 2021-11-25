@@ -7,11 +7,11 @@ const router = express.Router();
 const connectdb = require('../../db_files/connect') // connect file connects to pgsql
 const uniqid = require('uniqid')
 const { v4: uuidv4 } = require('uuid');
-
+const requireLogin = require('../../middleware/requireLogin')
 
 
 /* GET route to obtain user home page */
-router.get('/users/:id', (req,res) => {
+router.get('/users/:id', requireLogin, (req,res) => {
     const customer_id = req.params.id // getting customer id 
     let customer_name = ''
     
@@ -28,12 +28,7 @@ router.get('/users/:id', (req,res) => {
         }
         else {
             customer_name = result.rows[0].name
-            if (req.session.user_id) {
-                res.render('user/home', {customer_id,customer_name}) // rendering customer home page ejs file
-            }
-            else {
-                res.redirect('/login')
-            }
+            res.render('user/home', {customer_id,customer_name}) // rendering customer home page ejs file
         }
     })
 })

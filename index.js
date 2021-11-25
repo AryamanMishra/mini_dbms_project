@@ -19,7 +19,6 @@ const auth = require('./middleware/auth')
 
 
 
-
 // inbuilt connect function of pg npm package
 connectdb.connect((err) => {
     if (err) throw err
@@ -50,7 +49,6 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 
-
 /* Home page */
 app.get('/', (req,res) => {
     res.render('home')
@@ -62,6 +60,9 @@ const loginRoute = require('./routes/login')
 
 /* requiring signup route */
 const signupRoute = require('./routes/signup')
+
+/* requiring logout route */
+const logoutRoute = require('./routes/logout')
 
 /* requiring user home route */
 const userHome = require('./routes/user/home')
@@ -96,6 +97,8 @@ const products = require('./routes/products')
 app.use('/', loginRoute)
 
 app.use('/', signupRoute)
+
+app.use('/', logoutRoute)
 
 app.use('/', userHome)
 

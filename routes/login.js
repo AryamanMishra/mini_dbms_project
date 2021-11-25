@@ -52,7 +52,7 @@ router.post('/login',(req,res) => {
                     const customer_id = result.rows[0].customer_id
                     const cart_id = result.rows[0].cart_id
                     req.session.user_id = customer_id
-
+                    req.session.cart_id = cart_id
                     // /* saving cookies upon logging */
                     // res.cookie('customer_id', customer_id) 
                     // res.cookie('cart_id', cart_id)

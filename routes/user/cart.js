@@ -7,11 +7,11 @@ const router = express.Router();
 const connectdb = require('../../db_files/connect') // connect file connects to pgsql
 const uniqid = require('uniqid')
 const { v4: uuidv4 } = require('uuid');
-
+const requireLogin = require('../../middleware/requireLogin')
 
 
 /* GET route to obtain user cart page */
-router.get('/users/:id/cart', (req,res) => {
+router.get('/users/:id/cart', requireLogin, (req,res) => {
     const customer_id = req.params.id // getting customer id been stored in cookies
     let cart_id = null
 
@@ -75,15 +75,12 @@ router.get('/users/:id/cart', (req,res) => {
                                 total_cost += cart_items[i].quantity*(product_details[j].price - product_details[j].discount)
                         }
                     }
-                    /* rendering ejs file  */
                     res.render('user/cart', {total_cost,cart_items, customer_id, product_details})
                 })
                
             }
             else 
-                /* empty cart */
                 res.send('No items yet')
-            
         })
     })
 })
@@ -91,7 +88,7 @@ router.get('/users/:id/cart', (req,res) => {
 
 /* GET route add items in user cart */
 router.post('/cart', (req,res) => {
-    const customer_id = req.cookies.customer_id
+    const customer_id = req.session.user_id
     const cart_id = req.cookies.cart_id
     const product_id = req.body.product_id
 

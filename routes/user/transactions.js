@@ -5,10 +5,12 @@ const router = express.Router();
 const connectdb = require('../../db_files/connect') // connect file connects to pgsql
 const uniqid = require('uniqid')
 const { v4: uuidv4 } = require('uuid');
+const requireLogin = require('../../middleware/requireLogin')
+
 
 
 /* get route to get user transactions */
-router.get('/users/:customer_id/transactions', (req,res) => {
+router.get('/users/:customer_id/transactions', requireLogin, (req,res) => {
 
     /* cookie parser */
     const customer_id = req.cookies.customer_id
@@ -56,15 +58,11 @@ router.get('/users/:customer_id/transactions', (req,res) => {
                     // console.log(product_details)
 
                     /* if no transactions found */
-                    if (transactions.length === 0)
+                    if (transactions.length === 0) {
                         res.send('No transactions yet')
+                    }
                     else {
-                        if (req.session.user_id) {
-                            res.render('user/transactions', {transactions,customer_id,product_details,order_details})
-                        }
-                        else {
-                            res.redirect('/login')
-                        }
+                        res.render('user/transactions', {transactions,customer_id,product_details,order_details})
                     }
                 })
             })

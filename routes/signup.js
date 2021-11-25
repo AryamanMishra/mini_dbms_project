@@ -68,6 +68,7 @@ router.post('/signup', (req,res) => {
                     if (err) throw err;
                     console.log('user saved in db')
                     req.session.user_id = customer_id
+                    req.session.cart_id = cart_id
                     res.redirect(`/users/${customer_id}`)  
                 })
             }

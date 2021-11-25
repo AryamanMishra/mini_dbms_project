@@ -7,11 +7,11 @@ const router = express.Router();
 const connectdb = require('../db_files/connect') // connect file connects to pgsql
 const uniqid = require('uniqid')
 const { v4: uuidv4 } = require('uuid');
-
+const requireLogin = require('../middleware/requireLogin')
 
 
 /* Getting all the products of a particular category */
-router.get('/categories/:name', (req,res) => {
+router.get('/categories/:name', requireLogin, (req,res) => {
     const customer_id = req.session.user_id
     const category_name =  req.params.name // getting category name from the parameters
 

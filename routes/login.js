@@ -14,6 +14,7 @@ router.use(cookieParser())
 //     secret:'asecret'
 // }))
 
+
 /* Getting login page */
 router.get('/login',(req,res,next) => {
     res.render('login')
@@ -56,6 +57,7 @@ router.post('/login',(req,res) => {
                     // /* saving cookies upon logging */
                     // res.cookie('customer_id', customer_id) 
                     // res.cookie('cart_id', cart_id)
+                    req.flash('success', 'Logged in succesfully')
                     res.redirect(`/users/${customer_id}`)
                 }
                 else {

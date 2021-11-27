@@ -13,6 +13,7 @@ const { v4: uuidv4 } = require('uuid');
 
 /* express session npm package */
 const session = require("express-session");
+const flash = require('connect-flash')
 
 /* auth file */
 const auth = require('./middleware/auth')
@@ -43,6 +44,12 @@ app.use(session({
     saveUninitialized:'yay'
 }))
 
+app.use(flash())
+
+app.use((req,res,next) => {
+    res.locals.success = req.flash('success')
+    next()
+})
 
 /* For json formatting of data */
 app.use(express.json())

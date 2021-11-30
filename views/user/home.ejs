@@ -5,8 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= customer_name %></title>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
 </head>
 <body style="text-align: left; margin-left:40%">
+    <% if (c === 0) {%>
+        <script>
+            Swal.fire({
+                title:'Logged in Succesfully',
+                icon:'success'
+            })
+        </script>
+    <% } %>    
     <%= success %> 
     <h2 style="margin-left:-15% ;">Logged In as <%= customer_name %> (user id : <%= customer_id %>)</h2>
     <br>

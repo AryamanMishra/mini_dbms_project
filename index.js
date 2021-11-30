@@ -20,6 +20,7 @@ const auth = require('./middleware/auth')
 
 
 
+
 // inbuilt connect function of pg npm package
 connectdb.connect((err) => {
     if (err) throw err

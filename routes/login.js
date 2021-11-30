@@ -57,7 +57,7 @@ router.post('/login',(req,res) => {
                     // /* saving cookies upon logging */
                     // res.cookie('customer_id', customer_id) 
                     // res.cookie('cart_id', cart_id)
-                    req.flash('success', 'Logged in succesfully')
+                   // req.flash('success', 'Logged in succesfully')
                     res.redirect(`/users/${customer_id}`)
                 }
                 else {

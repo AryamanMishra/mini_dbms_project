@@ -10,8 +10,10 @@ const { v4: uuidv4 } = require('uuid');
 const requireLogin = require('../../middleware/requireLogin')
 
 
+
 /* GET route to obtain user home page */
 router.get('/users/:id', requireLogin, (req,res) => {
+    let c = 0
     const customer_id = req.params.id // getting customer id 
     let customer_name = ''
     
@@ -26,12 +28,14 @@ router.get('/users/:id', requireLogin, (req,res) => {
         if (result.rows.length === 0) {
             res.send('User not found')
         }
-        else {
+        else { 
             customer_name = result.rows[0].name
-            res.render('user/home', {customer_id,customer_name}) // rendering customer home page ejs file
+            res.render('user/home', {customer_id,customer_name,c}) // rendering customer home page ejs file
+            ++c
         }
     })
 })
+c = 0
 
 
 module.exports = router

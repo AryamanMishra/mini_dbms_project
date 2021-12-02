@@ -24,6 +24,7 @@ router.get('/users/:id/cart', requireLogin, (req,res) => {
             inner join customer as b
             on a.cart_id = b.cart_id
             where b.customer_id = '${customer_id}'
+            and a.cart_id = '${cart_id}'
             and a.cart_id = b.cart_id
     `
 
@@ -44,6 +45,7 @@ router.get('/users/:id/cart', requireLogin, (req,res) => {
             inner join cart as b
             on a.cart_id = b.cart_id
             where a.cart_id = '${cart_id}'
+            and b.cart_id = '${cart_id}'
         `
         connectdb.query(cart_item_sql, (err,result) => {
             if (err) throw err
@@ -60,28 +62,21 @@ router.get('/users/:id/cart', requireLogin, (req,res) => {
                     a.product_id
                     from cart_item as a
                     inner join cart as b
-                    on a.cart_id = b.cart_id)
+                    on a.cart_id = b.cart_id
+                    where a.cart_id = '${cart_id}'
+                    )
                 `
                 connectdb.query(sql, (err,result) => {
                     if (err) throw err
                     let product_details = result.rows
                     //console.log(cart_items)
                     // console.log(product_details)
-                    for (let i=0;i<cart_items.length;i++) {
-                        for (let j=0;j<product_details.length;j++) {
-                            if (cart_items[i].product_id === product_details[j].product_id)
-                                total_cost += cart_items[i].quantity*(product_details[j].price - product_details[j].discount)
-                        }
-                    }
-                    let total_cost_sql = 
-                    `
-                        update cart 
-                        set total_cost = '${total_cost}'
-                        where cart_id = '${cart_id}'
-                    `
-                    connectdb.query(total_cost_sql, (err,result) => {
-                        if (err) throw err
-                    })
+                    // for (let i=0;i<cart_items.length;i++) {
+                    //     for (let j=0;j<product_details.length;j++) {
+                    //         if (cart_items[i].product_id === product_details[j].product_id)
+                    //             total_cost += cart_items[i].quantity*(product_details[j].price - product_details[j].discount)
+                    //     }
+                    // }
                     res.render('user/cart', {total_cost,cart_items, customer_id, product_details,cart_id})
                 })
                
@@ -130,6 +125,32 @@ router.post('/cart', (req,res) => {
                 connectdb.query(sql, (err,result) => {
                     if (err) throw err
                     // console.log(result.rows);
+                    let show_cart_items_sql = 
+                    `
+                        select 
+                            (a.price - a.discount)*b.quantity as def_cost
+                            from product as a
+                            inner join cart_item as b
+                            on a.product_id = b.product_id
+                            where a.product_id = b.product_id
+                            and b.cart_id = '${cart_id}'
+                    `
+                    connectdb.query(show_cart_items_sql, (err,result) => {
+                        if (err) throw err
+                        let cart_items = result.rows
+                        let total_cost = 0
+                        for (let i=0;i<cart_items.length;i++)
+                            total_cost += cart_items[i].def_cost
+                        let total_cost_sql = 
+                        `
+                            update cart
+                            set total_cost = '${total_cost}'
+                            where cart_id = '${cart_id}'
+                        `
+                        connectdb.query(total_cost_sql, (err,result) => {
+                            if (err) throw err
+                        })
+                    })
                 })
             })
         }
@@ -147,6 +168,34 @@ router.post('/cart', (req,res) => {
             connectdb.query(cart_item_sql, (err,result) => {
                 if (err) throw err 
                 console.log('item added to cart');
+                
+
+                let show_cart_items_sql = 
+                `
+                    select 
+                        (a.price - a.discount)*b.quantity as def_cost
+                        from product as a
+                        inner join cart_item as b
+                        on a.product_id = b.product_id
+                        where a.product_id = b.product_id
+                        and b.cart_id = '${cart_id}'
+                `
+                connectdb.query(show_cart_items_sql, (err,result) => {
+                    if (err) throw err
+                    let cart_items = result.rows
+                    let total_cost = 0
+                    for (let i=0;i<cart_items.length;i++)
+                        total_cost += cart_items[i].def_cost
+                    let total_cost_sql = 
+                    `
+                        update cart
+                        set total_cost = '${total_cost}'
+                        where cart_id = '${cart_id}'
+                    `
+                    connectdb.query(total_cost_sql, (err,result) => {
+                        if (err) throw err
+                    })
+                })
             })
         }
         res.redirect(`/users/${customer_id}/cart`) // redirecting to user cart page 

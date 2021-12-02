@@ -50,19 +50,24 @@ router.get('/users/:customer_id/orders', requireLogin, (req,res) => {
             connectdb.query(sql, (err,result) => { 
                 if (err) throw err
                 const orders = result.rows
-                // console.log(product_details)
-                // console.log(orders);
+                if (orders.length === 0) {
+                    res.send('No orders yet')
+                }
+                else {
+                    // console.log(product_details)
+                    // console.log(orders);
 
-                /* getting product quantity from order details by using ids */
-                let quantity_sql = 
-                `
-                    select quantity,product_id from cart_item where product_id in ('${ids}')
-                `
-                connectdb.query(quantity_sql, (err,result) => {
-                    if (err) throw err
-                    let quantities = (result.rows)
-                    res.render('user/orders', {orders,customer_id, product_details,quantities})
-                })
+                    /* getting product quantity from order details by using ids */
+                    let quantity_sql = 
+                    `
+                        select quantity,product_id from cart_item where product_id in ('${ids}')
+                    `
+                    connectdb.query(quantity_sql, (err,result) => {
+                        if (err) throw err
+                        let quantities = (result.rows)
+                        res.render('user/orders', {orders,customer_id, product_details,quantities})
+                    })
+                }
             })
         })
     })

@@ -25,7 +25,7 @@ create table cart(
 )
 select * from cart
 delete from cart
-
+update cart set total_cost = 0 
 
 create table transaction(
     transaction_id varchar primary key,

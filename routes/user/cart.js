@@ -13,8 +13,7 @@ const requireLogin = require('../../middleware/requireLogin')
 /* GET route to obtain user cart page */
 router.get('/users/:id/cart', requireLogin, (req,res) => {
     const customer_id = req.params.id // getting customer id been stored in cookies
-    let cart_id = null
-
+    const cart_id = req.session.cart_id
     /* basic sql query variable */
     let sql =
     `
@@ -33,7 +32,6 @@ router.get('/users/:id/cart', requireLogin, (req,res) => {
         if (err) throw err
         let total_cost = 0
         if (result.rows.length !== 0) {
-            cart_id = result.rows[0].cart_id
             total_cost = result.rows[0].total_cost
         }
         /* getting cart items */
@@ -75,7 +73,16 @@ router.get('/users/:id/cart', requireLogin, (req,res) => {
                                 total_cost += cart_items[i].quantity*(product_details[j].price - product_details[j].discount)
                         }
                     }
-                    res.render('user/cart', {total_cost,cart_items, customer_id, product_details})
+                    let total_cost_sql = 
+                    `
+                        update cart 
+                        set total_cost = '${total_cost}'
+                        where cart_id = '${cart_id}'
+                    `
+                    connectdb.query(total_cost_sql, (err,result) => {
+                        if (err) throw err
+                    })
+                    res.render('user/cart', {total_cost,cart_items, customer_id, product_details,cart_id})
                 })
                
             }
@@ -89,7 +96,7 @@ router.get('/users/:id/cart', requireLogin, (req,res) => {
 /* GET route add items in user cart */
 router.post('/cart', (req,res) => {
     const customer_id = req.session.user_id
-    const cart_id = req.cookies.cart_id
+    const cart_id = req.session.cart_id
     const product_id = req.body.product_id
 
     /* checking if product customer wants to add is already present */

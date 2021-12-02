@@ -11,7 +11,7 @@ const requireLogin = require('../../middleware/requireLogin')
 
 /* get route to get all the orders placed by the user */
 router.get('/users/:customer_id/orders', requireLogin, (req,res) => {
-    const customer_id = req.cookies.customer_id // getting customer id from cookies
+    const customer_id = req.session.user_id // getting customer id from cookies
 
     /* getting product id */
     let product_ids_sql = 
@@ -74,8 +74,8 @@ router.get('/users/:customer_id/orders', requireLogin, (req,res) => {
 router.post('/order', (req,res) => {
 
     /* cookie data parsed */
-    const customer_id = req.cookies.customer_id
-    const cart_id = req.cookies.cart_id
+    const customer_id = req.session.user_id
+    const cart_id = req.session.cart_id
     // console.log(customer_id)
 
     /* unique order id */

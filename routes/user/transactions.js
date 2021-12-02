@@ -13,7 +13,7 @@ const requireLogin = require('../../middleware/requireLogin')
 router.get('/users/:customer_id/transactions', requireLogin, (req,res) => {
 
     /* cookie parser */
-    const customer_id = req.cookies.customer_id
+    const customer_id = req.session.user_id
 
     /* transaction details obtained from customer id */
     let sql = 

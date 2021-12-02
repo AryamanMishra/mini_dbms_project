@@ -77,7 +77,8 @@ create table category(
 )
 select * from category
 
-
+alter table order_details
+alter column order_date TYPE timestamp 
 
 create table order_details (
     order_id varchar primary key,

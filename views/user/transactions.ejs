@@ -10,11 +10,11 @@
     <h1>Your Transactions</h1>
     <br>
     <ol>
-        <% for (let t =0;t<transactions.length;t++) { %>
+        <% for (let t = 0;t<transactions.length;t++) { %>
             <li>
                 Transaction id: <%= transactions[t].transaction_id %>
                 <br>
-                Transaction Date: <%= transactions[t].transaction_date %> 
+                Transaction Date and Time: <%= transactions[t].transaction_date %> 
                 <br>
                 Transaction amount: <%= transactions[t].total_amount %> 
                 <br>

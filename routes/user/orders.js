@@ -6,7 +6,7 @@ const connectdb = require('../../db_files/connect') // connect file connects to 
 const uniqid = require('uniqid')
 const { v4: uuidv4 } = require('uuid');
 const requireLogin = require('../../middleware/requireLogin')
-
+// const moment = require('moment')
 
 
 /* get route to get all the orders placed by the user */
@@ -91,8 +91,12 @@ router.post('/order', (req,res) => {
     const dd = String(date.getDate()).padStart(2, '0');
     const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
     const yyyy = date.getFullYear();
-    date = yyyy + '/' + mm + '/' + dd;
-    /* code to obtain current date and time */
+    const hours = String(date.getHours())
+    const minutes = String(date.getMinutes())
+    const seconds = String(date.getSeconds())
+    date = yyyy + '-' + mm + '-' + dd + ' ' + hours + ':' + minutes + ':' + seconds;
+
+
 
     /* getting details from request body */
     const product_id = req.body.product_id

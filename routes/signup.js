@@ -69,7 +69,10 @@ router.post('/signup', (req,res) => {
                     console.log('user saved in db')
                     req.session.user_id = customer_id
                     req.session.cart_id = cart_id
-                    req.flash('success', 'Signed up succesfully')
+                    req.session.hasLoggedIn = 1
+                    req.session.hasSignedUp = 1
+
+                    //req.flash('success', 'Signed up succesfully')
                     res.redirect(`/users/${customer_id}`)  
                 })
             }

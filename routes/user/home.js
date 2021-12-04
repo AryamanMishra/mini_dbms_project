@@ -13,7 +13,6 @@ const requireLogin = require('../../middleware/requireLogin')
 
 /* GET route to obtain user home page */
 router.get('/users/:id', requireLogin, (req,res) => {
-    let c = 0
     const customer_id = req.params.id // getting customer id 
     let customer_name = ''
     
@@ -29,13 +28,21 @@ router.get('/users/:id', requireLogin, (req,res) => {
             res.send('User not found')
         }
         else { 
+            let signUpcheck = null
             customer_name = result.rows[0].name
-            res.render('user/home', {customer_id,customer_name,c}) // rendering customer home page ejs file
-            ++c
+            const loginCheck = req.session.hasLoggedIn
+            if (req.session.hasSignedUp) {
+                signUpcheck = req.session.hasSignedUp
+                if (req.session.hasSignedUp !== 0)
+                    req.session.hasSignedUp = 0
+            }
+            if (req.session.hasLoggedIn !== 0)
+                req.session.hasLoggedIn = 0
+            res.render('user/home', {customer_id,customer_name,loginCheck,signUpcheck}) // rendering customer home page ejs file
         }
     })
 })
-c = 0
+
 
 
 module.exports = router

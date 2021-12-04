@@ -16,7 +16,7 @@ create table customer(
     references cart(cart_id)
 )
 select * from customer
-delete from customer
+delete from customer where name = 'l'
 
 
 create table cart(

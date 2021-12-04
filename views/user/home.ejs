@@ -9,13 +9,23 @@
     <script src="sweetalert2.all.min.js"></script>
 </head>
 <body style="text-align: left; margin-left:40%">
-    <% if (c === 0) {%>
-        <script>
-            Swal.fire({
-                title:'Logged in Succesfully',
-                icon:'success'
-            })
-        </script>
+    <% if (loginCheck === 1) {%>
+        <% if (signUpcheck === 1) { %> 
+            <script>
+                Swal.fire({
+                    title:'Signed Up Succesfully',
+                    icon:'success'
+                })
+            </script>
+            
+        <% } else { %> 
+            <script>
+                Swal.fire({
+                    title:'Logged in Succesfully',
+                    icon:'success'
+                })
+            </script>
+        <% } %> 
     <% } %>    
     <%= success %> 
     <h2 style="margin-left:-15% ;">Logged In as <%= customer_name %> (user id : <%= customer_id %>)</h2>

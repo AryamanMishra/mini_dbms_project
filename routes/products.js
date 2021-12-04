@@ -34,8 +34,14 @@ router.get('/categories/:name', requireLogin, (req,res) => {
         connectdb.query(cat_prod, (err,result) => {
             if (err) throw err
             const products = result.rows // products
+            let addedToCart = null
             if (req.session.user_id) {
-                res.render('products',{products,category_name, customer_id}) //rendering products page
+                if (req.session.addedToCart) {
+                    addedToCart = req.session.addedToCart
+                    // console.log(addedToCart)
+                    req.session.addedToCart = 0
+                }
+                res.render('products',{products,category_name, customer_id,addedToCart}) //rendering products page
             }
             else {
                 res.redirect('/login')

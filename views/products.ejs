@@ -11,8 +11,17 @@
             <%= category_name %> Products 
         <% } %> 
     </title>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+    <% if (addedToCart === 1) {%>
+        <script>
+            Swal.fire({
+                title:'Item added to cart successfully',
+                icon:'success'
+            })
+        </script>
+    <% } %>  
     <h1>
         <% if(category_name[category_name.length - 1] === 's' ) { %> 
             <%= category_name.substring(0,category_name.length - 1) %> Products 
@@ -41,11 +50,14 @@
                 <br>
                 </li>   
                 <br>
-                <button type="submit">Add to Cart</button>
+                <button type="submit" style="cursor: pointer;">Add to Cart</button>
             </form>
             <br>
         <% } %>  
     </ol>
     <button><a href="/users/<%= customer_id %>" style="text-decoration: none;">Back to User Page</a></button>
+    <br>
+    <br>
+    <button><a href="/users/<%= customer_id %>/cart" style="text-decoration: none;">View Your Cart</a></button>
 </body>
 </html>

@@ -198,7 +198,18 @@ router.post('/cart', (req,res) => {
                 })
             })
         }
-        res.redirect(`/users/${customer_id}/cart`) // redirecting to user cart page 
+        /* getting category name */
+        let sql = 
+        `
+            select category_name from category 
+            where category_id = (select category_id from product where product_id = '${product_id}')
+        `
+        connectdb.query(sql, (err,result) => {
+            if (err) throw err
+            const category_name = result.rows[0].category_name
+            req.session.addedToCart = 1
+            res.redirect(`/categories/${category_name}`) // redirecting to same page 
+        })
     })
     
 })

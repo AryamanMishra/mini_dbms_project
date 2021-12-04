@@ -41,6 +41,7 @@ router.get('/categories/:name', requireLogin, (req,res) => {
                     // console.log(addedToCart)
                     req.session.addedToCart = 0
                 }
+                // console.log(req.session.addedToCart)
                 res.render('products',{products,category_name, customer_id,addedToCart}) //rendering products page
             }
             else {

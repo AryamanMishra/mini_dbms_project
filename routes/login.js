@@ -55,6 +55,7 @@ router.post('/login',(req,res) => {
                     req.session.user_id = customer_id
                     req.session.cart_id = cart_id
                     req.session.hasLoggedIn = 1
+                    // req.session.addedToCart = 0
 
                     // /* saving cookies upon logging */
                     // res.cookie('customer_id', customer_id) 

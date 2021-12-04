@@ -215,9 +215,9 @@ router.post('/cart', (req,res) => {
             const category_name = result.rows[0].category_name
             req.session.addedToCart = 1
             res.redirect(`/categories/${category_name}`) // redirecting to same page 
+            
         })
-    })
-    
+    }) 
 })
 
 module.exports = router

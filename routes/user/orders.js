@@ -130,7 +130,9 @@ router.post('/order', (req,res) => {
         connectdb.query(order_sql, (err,result) => {
             if (err) console.log(err)
             console.log('Order placed')
-            res.redirect(`/users/${customer_id}/orders`)
+
+            req.session.orderPlaced = 1
+            res.redirect(`/users/${customer_id}/cart`)
         })
     })
 })

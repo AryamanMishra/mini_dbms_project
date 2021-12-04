@@ -77,7 +77,13 @@ router.get('/users/:id/cart', requireLogin, (req,res) => {
                     //             total_cost += cart_items[i].quantity*(product_details[j].price - product_details[j].discount)
                     //     }
                     // }
-                    res.render('user/cart', {total_cost,cart_items, customer_id, product_details,cart_id})
+                    let orderPlaced = null
+                    if (req.session.orderPlaced) {
+                        orderPlaced = req.session.orderPlaced
+                        req.session.orderPlaced = 0
+                    }
+                    res.render('user/cart', {total_cost,cart_items, customer_id, product_details,cart_id,orderPlaced})
+                    req.session.orderPlaced = 0
                 })
                
             }

@@ -5,8 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart</title>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+    <% if (orderPlaced === 1) { %>
+        <script>
+            Swal.fire({
+                title:'Order placed successfully',
+                icon:'success'
+            })
+        </script>
+    <% } %>  
     <h2>Cart ID: <%= cart_id %> </h2>
     <h2>Total Cost of Cart: &#8377;<%= total_cost %></h2>
     <h2>Cart Items: </h2>
@@ -41,12 +50,15 @@
                 <% } %> 
                 <br>
                 <br> 
-                <button type="submit">Order</button>
+                <button type="submit" style="cursor: pointer;">Order</button>
                 <br/>
                 <br>
             </form>
         <% } %> 
     </ol>
     <button><a href="/users/<%= customer_id %>" style="text-decoration: none;">Back to User Page</a></button>
+    <br>
+    <br>
+    <button><a href="/users/<%= customer_id %>/orders" style="text-decoration: none;">View your order history</a></button>
 </body>
 </html>

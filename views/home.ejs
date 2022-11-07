@@ -6,14 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+        * {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            text-transform: uppercase;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        a {
+            padding: 10px 12px;
+            width: 100px;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            background-color: #1e1e27;
+            border-radius: 10px;
+            color: white;
+        }
+    </style>
+
 </head>
 <body> 
     <h1 style="text-align: center;">Welcome to e-commerce</h1>
-    <form action="" style="text-align: center;">
-        <button><a href="/signup" style="text-decoration: none;">Signup</a></button>
-        <br>
-        <br>
-        <button><a href="/login" style="text-decoration: none;">Login</a></button>
-    </form>
+    <div style="text-align: center;">
+        <a href="/signup" style="text-decoration: none;">Signup</a>
+        <a href="/login" style="text-decoration: none;">Login</a>
+    </div>
 </body>
 </html>

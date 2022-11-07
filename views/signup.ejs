@@ -5,35 +5,94 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+        * {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        body {
+            text-align: center;
+        }
+
+        h1 {
+            text-transform: uppercase;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-control {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            justify-content: center;
+            align-items: left;
+        }
+
+        input {
+            width: 200px;
+        }
+
+        label {
+            width: 200px;
+        }
+
+        a, button {
+            padding: 10px 12px;
+            width: 100px;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            background-color: #1e1e27;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            text-transform: capitalize;
+        }
+    </style>
+
 </head>
 <body>
     <h1 style="text-align: center;">Sign Up</h1>
     <br>
     <br>
-    <form action="/signup" method="post" style="text-align: left; margin-left:40%">
-        <label for="customer_name">Name:</label>
-        <input type="text" name="name" id="customer_name" placeholder="Your name">
-        <br>
-        <label for="phone_no">Phone Number: </label>
-        <input type="text" name="phone_no" id="phone_no" placeholder="Your phone no."> 
-        <br>
-        <label for="address">Address: </label>
-        <input type="text" name="address" id="address" placeholder="Your home address"> 
-        <br>
-        <label for="password">Password: </label>
-        <input type="password" name="password" id="password" placeholder="Your website password"> 
-        <button onclick="show()" type="button" id="showpasswordbutton">Show password</button>
-        <br>
-        <label for="email_id">Email Id:</label>
-        <input type="text" name="email_id" id="email_id" placeholder="Your email address"> 
-        <br>
-        <br>
+    <form action="/signup" method="post">
+        <div class="form-control">
+            <label for="customer_name">Name:</label>
+            <input type="text" name="name" id="customer_name" placeholder="Your name">
+        </div>
+        <div class="form-control">
+            <label for="phone_no">Phone Number: </label>
+            <input type="text" name="phone_no" id="phone_no" placeholder="Your phone no."> 
+        </div>
+        <div class="form-control">
+            <label for="address">Address: </label>
+            <input type="text" name="address" id="address" placeholder="Your home address"> 
+        </div>
+        <div class="form-control">
+            <label for="email_id">Email Id:</label>
+            <input type="text" name="email_id" id="email_id" placeholder="Your email address"> 
+        </div>
+        <div class="form-control">
+            <label for="password">Password: </label>
+            <input type="password" name="password" id="password" placeholder="Your website password"> 
+        </div>
+        <button onclick="show()" type="button" id="showpasswordbutton" style="width: 160px; font-size: 14px">Show password</button>
+        
         <button type="submit">SUBMIT</button>
     </form>
     <br>
     <br>
     <br>
-    <button style="text-align: left; margin-left:40%"><a href="/" style="text-decoration: none;">Back to login/signup page</a></button>
+    <a href="/" style="text-decoration: none;">Back to Home page</a>
 </body>
 <script>
     function show() {

@@ -5,26 +5,81 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log in</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+        * {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        body {
+            text-align: center;
+        }
+
+        h1 {
+            text-transform: uppercase;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-control {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            justify-content: center;
+            align-items: left;
+        }
+
+        input {
+            width: 200px;
+        }
+
+        label {
+            width: 200px;
+        }
+
+        a, button {
+            padding: 10px 12px;
+            width: 100px;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+            background-color: #1e1e27;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            text-transform: capitalize;
+        }
+    </style>
+
 </head>
 <body>
     <h1 style="text-align: center;">Log In</h1>
     <br>
     <br>
-    <form action="/login" method="post" style="text-align: left; margin-left:40%">
-        <label for="email_id">Email id:</label>
-        <input type="text" name="email_id" id="email_id" placeholder="Your website email id" style="margin-bottom:1.5rem;">
-        <br>
-        <label for="password">Password: </label>
-        <input type="password" name="password" id="password" placeholder="Your website password"> 
-        <button onclick="show()" type="button" id="showpasswordbutton" style="cursor: pointer;">Show password</button>
-        <br>
-        <br>    
+    <form action="/login" method="post">
+        <div class="form-control">
+            <label for="email_id">Email id:</label>
+            <input type="text" name="email_id" id="email_id" placeholder="Your website email id">
+        </div>
+        <div class="form-control">
+            <label for="password">Password: </label>
+            <input type="password" name="password" id="password" placeholder="Your website password"> 
+        </div>
+        <button onclick="show()" type="button" id="showpasswordbutton" style="width: 160px; font-size: 14px">Show password</button> 
         <button type="submit" style="cursor: pointer;">SUBMIT</button>
     </form>
     <br>
     <br>
     <br>
-    <button style="text-align: left; margin-left:40%"><a href="/" style="text-decoration: none;">Back to login/signup page</a></button>
+    <a href="/" style="text-decoration: none;">Back to home page</a>
 </body>
 <script>
     function show() {

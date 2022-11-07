@@ -96,7 +96,7 @@ const products = require('./routes/products')
 
 /* 
 
-    calling all the routed by app.use and linking them directly to the / route.
+    calling all the routes by app.use and linking them directly to the / route.
     This simply means if suppose login route has app.get('/login',..),
     app.use directly go to /login route only.
 
